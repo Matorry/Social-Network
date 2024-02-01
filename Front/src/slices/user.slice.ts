@@ -37,7 +37,7 @@ const usersSlice = createSlice({
 
     builder.addCase(loginThunk.rejected, (state) => {
       state.userStatus = "error";
-      state.error = new Error("error when logging in");
+      state.error = new Error("Error when logging in");
     });
   },
 });

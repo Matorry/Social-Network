@@ -2,30 +2,39 @@
   "hash": "ae8de5a8",
   "configHash": "cf5d6eab",
   "lockfileHash": "6ca422fe",
-  "browserHash": "a7ef98d4",
+  "browserHash": "6c70bb0e",
   "optimized": {
     "react/jsx-dev-runtime": {
       "src": "../../node_modules/react/jsx-dev-runtime.js",
       "file": "react_jsx-dev-runtime.js",
-      "fileHash": "c46c077e",
+      "fileHash": "68f3f13e",
       "needsInterop": true
     },
     "react": {
       "src": "../../node_modules/react/index.js",
       "file": "react.js",
-      "fileHash": "eff03064",
+      "fileHash": "62d85fc0",
       "needsInterop": true
     },
     "react-dom/client": {
       "src": "../../node_modules/react-dom/client.js",
       "file": "react-dom_client.js",
-      "fileHash": "86e90ed5",
+      "fileHash": "23e1530e",
       "needsInterop": true
+    },
+    "@reduxjs/toolkit": {
+      "src": "../../node_modules/@reduxjs/toolkit/dist/redux-toolkit.modern.mjs",
+      "file": "@reduxjs_toolkit.js",
+      "fileHash": "7e7370a9",
+      "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-XFZ2DVVZ": {
-      "file": "chunk-XFZ2DVVZ.js"
+    "chunk-XBXIS6EM": {
+      "file": "chunk-XBXIS6EM.js"
+    },
+    "chunk-TYRVL62N": {
+      "file": "chunk-TYRVL62N.js"
     }
   }
 }
