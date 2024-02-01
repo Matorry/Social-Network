@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useUsers } from "../hooks/use.user";
 import { LoginData } from "../models/user";
@@ -9,15 +9,18 @@ const LoginForm = () => {
   const [passwd, setPasswd] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (status === "logged") {
+      navigate("/update-account");
+    }
+  });
+
   const handleLogin = async () => {
     const userCredentials: LoginData = { userName, passwd };
     try {
       await loginUser(userCredentials);
     } catch (error) {
       console.error("Error during login:", error);
-    }
-    if (status === "logged") {
-      navigate("/update-account");
     }
   };
 

@@ -86,8 +86,11 @@ const usersSlice = createSlice({
       state.error = undefined;
     });
 
-    builder.addCase(deleteThunk.fulfilled, () => {
-      initialState;
+    builder.addCase(deleteThunk.fulfilled, (state) => {
+      state.currentUser = { user: {}, token: "" } as Logged;
+      state.isLoading = false;
+      state.status = "not logged";
+      state.error = undefined;
     });
 
     builder.addCase(deleteThunk.rejected, (state, action) => {
