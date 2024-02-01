@@ -2,7 +2,7 @@
 import { Request, ResponseToolkit } from "@hapi/hapi";
 import { Auth } from "../services/auth.js";
 export class AuthInterceptor {
-  async authentication(request: Request, h: ResponseToolkit) {
+  async authentication(request: Request, response: ResponseToolkit) {
     try {
       const token = request.headers.authorization?.replace("Bearer ", "");
 
@@ -13,13 +13,13 @@ export class AuthInterceptor {
       const payload = Auth.verifyTokenGettingPayload(token);
       request.auth.credentials = payload;
 
-      return h.continue;
+      return response.continue;
     } catch (error) {
-      return h.response({ error: "Invalid token" }).code(401);
+      return response.response({ error: "Invalid token" }).code(401);
     }
   }
 
-  async authorization(request: Request, h: ResponseToolkit) {
+  async authorization(request: Request, response: ResponseToolkit) {
     try {
       const token = request.headers.authorization?.replace("Bearer ", "");
 
@@ -31,9 +31,9 @@ export class AuthInterceptor {
 
       request.plugins = { validatedId: id };
 
-      return h.continue;
+      return response.continue;
     } catch (error) {
-      return h.response({ error: "Invalid token" }).code(401);
+      return response.response({ error: "Invalid token" }).code(401);
     }
   }
 }

@@ -1,4 +1,4 @@
-import Hapi from "@hapi/hapi";
+import { Server } from "@hapi/hapi";
 import { UsersController } from "../controllers/user.controller.js";
 import { AuthInterceptor } from "../middleware/auth.interceptor.js";
 
@@ -11,7 +11,7 @@ export class UsersRouter {
     this.authInterceptor = new AuthInterceptor();
   }
 
-  async configureRoutes(server: Hapi.Server) {
+  async configureRoutes(server: Server) {
     server.route({
       method: "PATCH",
       path: "/login",

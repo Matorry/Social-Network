@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import Hapi from "@hapi/hapi";
+import { Request, ResponseToolkit } from "@hapi/hapi";
 import { Repository } from "../repository/repository.js";
 
 export abstract class Controller<T extends { id: string | number }> {
@@ -9,50 +9,50 @@ export abstract class Controller<T extends { id: string | number }> {
     this.repo = repo;
   }
 
-  async getAll(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+  async getAll(request: Request, response: ResponseToolkit) {
     try {
       const data = await this.repo.getAll();
-      return h.response(data).code(200);
+      return response.response(data).code(200);
     } catch (error) {
-      return h.response({ error: "Internal Server Error" }).code(500);
+      return response.response({ error: "Internal Server Error" }).code(500);
     }
   }
 
-  async get(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+  async get(request: Request, response: ResponseToolkit) {
     try {
       const { id } = request.params;
       const data = await this.repo.get(id);
-      return h.response(data).code(200);
+      return response.response(data).code(200);
     } catch (error) {
-      return h.response({ error: "Internal Server Error" }).code(500);
+      return response.response({ error: "Internal Server Error" }).code(500);
     }
   }
 
-  async post(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+  async post(request: Request, response: ResponseToolkit) {
     try {
       const user = await this.repo.post(request.payload as Omit<T, "id">);
-      return h.response(user).code(201);
+      return response.response(user).code(201);
     } catch (error) {
-      return h.response({ error: "Internal Server Error" }).code(500);
+      return response.response({ error: "Internal Server Error" }).code(500);
     }
   }
 
-  async patch(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+  async patch(request: Request, response: ResponseToolkit) {
     try {
       const { id } = request.params;
       const user = await this.repo.patch(id, request.payload as Partial<T>);
-      return h.response(user).code(200);
+      return response.response(user).code(200);
     } catch (error) {
-      return h.response({ error: "Internal Server Error" }).code(500);
+      return response.response({ error: "Internal Server Error" }).code(500);
     }
   }
 
-  async delete(request: Hapi.Request, h: Hapi.ResponseToolkit) {
+  async delete(request: Request, response: ResponseToolkit) {
     try {
       await this.repo.delete(request.params.id);
-      return h.response().code(204);
+      return response.response().code(204);
     } catch (error) {
-      return h.response({ error: "Internal Server Error" }).code(500);
+      return response.response({ error: "Internal Server Error" }).code(500);
     }
   }
 }
