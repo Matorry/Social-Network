@@ -5,7 +5,7 @@ import { ApiUsersRepository } from "../services/user.repository";
 import { AppDispatch, RootState } from "../store/store";
 import { loginThunk } from "../thunks/user.thunk";
 
-export const urlBaseUsers = "URL";
+export const urlBaseUsers = "http://localhost:3000";
 
 export function useUsers() {
   const repository = useMemo(() => new ApiUsersRepository(urlBaseUsers), []);

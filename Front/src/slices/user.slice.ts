@@ -6,14 +6,14 @@ export type UsersState = {
   currentUser: Logged;
   isAuthenticated: boolean;
   userStatus: "logged" | "not logged" | "error" | "pending";
-  error: Error | null;
+  error: string | undefined;
 };
 
 const initialState: UsersState = {
   currentUser: { user: {}, token: "" } as Logged,
   isAuthenticated: false,
   userStatus: "not logged",
-  error: null,
+  error: undefined,
 };
 
 const usersSlice = createSlice({
@@ -23,7 +23,7 @@ const usersSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(loginThunk.pending, (state) => {
       state.userStatus = "pending";
-      state.error = null;
+      state.error = undefined;
     });
 
     builder.addCase(
@@ -31,13 +31,13 @@ const usersSlice = createSlice({
       (state, { payload }: { payload: Logged }) => {
         state.currentUser = payload;
         state.userStatus = "logged";
-        state.error = null;
+        state.error = undefined;
       }
     );
 
-    builder.addCase(loginThunk.rejected, (state) => {
+    builder.addCase(loginThunk.rejected, (state, action) => {
       state.userStatus = "error";
-      state.error = new Error("Error when logging in");
+      state.error = action.error.message;
     });
   },
 });
