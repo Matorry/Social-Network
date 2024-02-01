@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginThunk, registerThunk, updateThunk } from "../thunks/user.thunk";
+import {
+  deleteThunk,
+  loginThunk,
+  registerThunk,
+  updateThunk,
+} from "../thunks/user.thunk";
 import { Logged } from "../types/logged";
 
 export type UsersState = {
@@ -71,6 +76,21 @@ const usersSlice = createSlice({
     });
 
     builder.addCase(updateThunk.rejected, (state, action) => {
+      state.isLoading = false;
+      state.status = "error";
+      state.error = action.error.message;
+    });
+
+    builder.addCase(deleteThunk.pending, (state) => {
+      state.isLoading = true;
+      state.error = undefined;
+    });
+
+    builder.addCase(deleteThunk.fulfilled, () => {
+      initialState;
+    });
+
+    builder.addCase(deleteThunk.rejected, (state, action) => {
       state.isLoading = false;
       state.status = "error";
       state.error = action.error.message;

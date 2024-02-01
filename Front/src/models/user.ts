@@ -6,9 +6,12 @@ export type UserNoId = {
   surname: string;
   imageUrl: string;
   followingRelations: FollowRelation;
+  likes: [];
+  posts: [];
+  comments: [];
   isPublic: boolean;
   email: string;
-  paswd: string;
+  passwd: string;
 };
 
 export type FollowRelation = {

@@ -3,7 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { LoginData, User, UserNoId } from "../models/user";
 import { ApiUsersRepository } from "../services/user.repository";
 import { AppDispatch, RootState } from "../store/store";
-import { loginThunk, registerThunk, updateThunk } from "../thunks/user.thunk";
+import {
+  deleteThunk,
+  loginThunk,
+  registerThunk,
+  updateThunk,
+} from "../thunks/user.thunk";
 
 export const urlBaseUsers = "http://localhost:3000";
 
@@ -27,6 +32,10 @@ export function useUsers() {
     usersDispatch(updateThunk({ repository, user, token }));
   };
 
+  const deleteUser = async (id: string) => {
+    usersDispatch(deleteThunk({ repository, id, token }));
+  };
+
   return {
     user: usersState.currentUser.user,
     error: usersState.error,
@@ -37,5 +46,6 @@ export function useUsers() {
     loginUser,
     registerUser,
     updateUser,
+    deleteUser,
   };
 }

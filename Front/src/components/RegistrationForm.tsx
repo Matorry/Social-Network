@@ -9,7 +9,7 @@ type Props = {
 };
 
 const RegistrationForm = ({ mode, currentUser }: Props) => {
-  const { registerUser, updateUser, error, user } = useUsers();
+  const { registerUser, updateUser, deleteUser, error, user } = useUsers();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,7 +26,10 @@ const RegistrationForm = ({ mode, currentUser }: Props) => {
     followingRelations: { followers: [], followings: [] },
     isPublic: true,
     email: "",
-    paswd: "",
+    passwd: "",
+    comments: [],
+    likes: [],
+    posts: [],
   });
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,10 +49,19 @@ const RegistrationForm = ({ mode, currentUser }: Props) => {
       return;
     }
     try {
-      await updateUser(user);
+      await updateUser({ ...userData, id: user.id });
       navigate("/login");
     } catch (error) {
       console.error("Error during registration:", error);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      await deleteUser(user.id);
+      navigate("/login");
+    } catch (error) {
+      console.error("Error deleting account:", error);
     }
   };
 
@@ -62,6 +74,7 @@ const RegistrationForm = ({ mode, currentUser }: Props) => {
           name="userName"
           value={userData.userName}
           onChange={handleInputChange}
+          required
         />
       </div>
       <div>
@@ -71,6 +84,7 @@ const RegistrationForm = ({ mode, currentUser }: Props) => {
           name="name"
           value={userData.name}
           onChange={handleInputChange}
+          required
         />
       </div>
       <div>
@@ -80,6 +94,7 @@ const RegistrationForm = ({ mode, currentUser }: Props) => {
           name="surname"
           value={userData.surname}
           onChange={handleInputChange}
+          required
         />
       </div>
       <div>
@@ -89,6 +104,7 @@ const RegistrationForm = ({ mode, currentUser }: Props) => {
           name="email"
           value={userData.email}
           onChange={handleInputChange}
+          required
         />
       </div>
       {mode === "register" && (
@@ -96,9 +112,10 @@ const RegistrationForm = ({ mode, currentUser }: Props) => {
           <label>Password:</label>
           <input
             type="password"
-            name="paswd"
-            value={userData.paswd}
+            name="passwd"
+            value={userData.passwd}
             onChange={handleInputChange}
+            required
           />
         </div>
       )}
@@ -120,6 +137,13 @@ const RegistrationForm = ({ mode, currentUser }: Props) => {
         </div>
       )}
       {error && <div style={{ color: "red" }}>{error}</div>}
+      {mode === "update" && (
+        <div>
+          <button type="button" onClick={handleDeleteAccount}>
+            Delete Account
+          </button>
+        </div>
+      )}
     </form>
   );
 };

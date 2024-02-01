@@ -53,4 +53,16 @@ export class ApiUsersRepository implements Repository<User> {
     const data = await response.json();
     return data;
   }
+
+  async delete(id: string, token: string): Promise<void> {
+    const response = await fetch(this.urlBase + "/delete/" + id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
+    if (!response.ok)
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+  }
 }

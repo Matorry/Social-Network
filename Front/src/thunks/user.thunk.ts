@@ -13,7 +13,7 @@ export const loginThunk = createAsyncThunk<
 });
 
 export const registerThunk = createAsyncThunk<
-  UserNoId,
+  User,
   { repository: ApiUsersRepository; user: UserNoId }
 >("users/register", async ({ repository, user }) => {
   const updatedUser = await repository.register(user);
@@ -28,4 +28,13 @@ export const updateThunk = createAsyncThunk<
   const updatedUser = await repository.update(user, user.id, token);
 
   return updatedUser;
+});
+
+export const deleteThunk = createAsyncThunk<
+  void,
+  { repository: ApiUsersRepository; id: string; token: string }
+>("users/delete", async ({ repository, id, token }) => {
+  const deleteUser = await repository.delete(id, token);
+
+  return deleteUser;
 });
