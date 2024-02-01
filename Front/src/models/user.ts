@@ -1,5 +1,4 @@
 import { WithId } from "../types/withId";
-import { Post } from "./post";
 
 export type UserNoId = {
   userName: string;
@@ -7,10 +6,7 @@ export type UserNoId = {
   surname: string;
   imageUrl: string;
   followingRelations: FollowRelation;
-  likes: Post[];
-  posts: Post[];
   isPublic: boolean;
-  comments: Comment[];
   email: string;
   paswd: string;
 };
@@ -22,7 +18,7 @@ export type FollowRelation = {
 
 export type LoginData = {
   userName: string;
-  password: string;
+  passwd: string;
 };
 
 export type User = WithId & UserNoId;
