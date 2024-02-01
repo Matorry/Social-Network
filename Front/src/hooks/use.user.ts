@@ -1,14 +1,16 @@
 import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LoginData } from "../models/user";
+import { LoginData, User, UserNoId } from "../models/user";
 import { ApiUsersRepository } from "../services/user.repository";
 import { AppDispatch, RootState } from "../store/store";
-import { loginThunk } from "../thunks/user.thunk";
+import { loginThunk, registerThunk, updateThunk } from "../thunks/user.thunk";
 
 export const urlBaseUsers = "http://localhost:3000";
 
 export function useUsers() {
   const repository = useMemo(() => new ApiUsersRepository(urlBaseUsers), []);
+  const userState = useSelector((state: RootState) => state.usersState);
+  const token = userState.currentUser.token;
 
   const usersState = useSelector((state: RootState) => state.usersState);
   const usersDispatch = useDispatch<AppDispatch>();
@@ -17,11 +19,23 @@ export function useUsers() {
     usersDispatch(loginThunk({ repository, user }));
   };
 
+  const registerUser = async (user: UserNoId) => {
+    usersDispatch(registerThunk({ repository, user }));
+  };
+
+  const updateUser = async (user: User) => {
+    usersDispatch(updateThunk({ repository, user, token }));
+  };
+
   return {
     user: usersState.currentUser.user,
     error: usersState.error,
-    status: usersState.userStatus,
+
+    isLoading: usersState.isLoading,
+    status: usersState.status,
     token: usersState.currentUser.token,
     loginUser,
+    registerUser,
+    updateUser,
   };
 }

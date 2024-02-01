@@ -1,18 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginThunk } from "../thunks/user.thunk";
+import { loginThunk, registerThunk, updateThunk } from "../thunks/user.thunk";
 import { Logged } from "../types/logged";
 
 export type UsersState = {
   currentUser: Logged;
-  isAuthenticated: boolean;
-  userStatus: "logged" | "not logged" | "error" | "pending";
+  isLoading: boolean;
+  status: "logged" | "not logged" | "error" | "registered";
   error: string | undefined;
 };
 
 const initialState: UsersState = {
   currentUser: { user: {}, token: "" } as Logged,
-  isAuthenticated: false,
-  userStatus: "not logged",
+
+  isLoading: false,
+  status: "not logged",
   error: undefined,
 };
 
@@ -22,7 +23,7 @@ const usersSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(loginThunk.pending, (state) => {
-      state.userStatus = "pending";
+      state.isLoading = true;
       state.error = undefined;
     });
 
@@ -30,13 +31,48 @@ const usersSlice = createSlice({
       loginThunk.fulfilled,
       (state, { payload }: { payload: Logged }) => {
         state.currentUser = payload;
-        state.userStatus = "logged";
+        state.isLoading = false;
+        state.status = "logged";
         state.error = undefined;
       }
     );
 
     builder.addCase(loginThunk.rejected, (state, action) => {
-      state.userStatus = "error";
+      state.isLoading = false;
+      state.status = "error";
+      state.error = action.error.message;
+    });
+
+    builder.addCase(registerThunk.pending, (state) => {
+      state.isLoading = true;
+      state.error = undefined;
+    });
+
+    builder.addCase(registerThunk.fulfilled, (state) => {
+      state.isLoading = false;
+      state.status = "registered";
+      state.error = undefined;
+    });
+
+    builder.addCase(registerThunk.rejected, (state, action) => {
+      state.isLoading = false;
+      state.status = "error";
+      state.error = action.error.message;
+    });
+
+    builder.addCase(updateThunk.pending, (state) => {
+      state.isLoading = true;
+      state.error = undefined;
+    });
+
+    builder.addCase(updateThunk.fulfilled, (state) => {
+      state.isLoading = false;
+      state.error = undefined;
+    });
+
+    builder.addCase(updateThunk.rejected, (state, action) => {
+      state.isLoading = false;
+      state.status = "error";
       state.error = action.error.message;
     });
   },

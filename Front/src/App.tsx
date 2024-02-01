@@ -1,9 +1,9 @@
-import LoginForm from "./components/LoginForm";
+import { AppRoutes } from "./routes/app.routes";
 
 function App() {
   return (
     <>
-      <LoginForm></LoginForm>
+      <AppRoutes></AppRoutes>
     </>
   );
 }

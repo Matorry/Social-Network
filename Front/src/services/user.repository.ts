@@ -34,4 +34,23 @@ export class ApiUsersRepository implements Repository<User> {
     const data = await response.json();
     return data;
   }
+
+  async update(
+    newData: Partial<User>,
+    id: string,
+    token: string
+  ): Promise<User> {
+    const response = await fetch(this.urlBase + "/patch/" + id, {
+      method: "PATCH",
+      body: JSON.stringify(newData),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
+    if (!response.ok)
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+    const data = await response.json();
+    return data;
+  }
 }
