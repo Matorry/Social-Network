@@ -2,10 +2,11 @@
   "name": "back",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "type": "module",
+  "main": "app.js",
   "scripts": {
-    "server": "cross-env PORT=4300 nodemon dist/index.js",
-    "server:prod": "cross-env PORT=4300 node dist/index.js",
+    "server": "cross-env PORT=4300 nodemon dist/app.js",
+    "server:prod": "cross-env PORT=4300 node dist/app.js",
     "build": "tsc --watch",
     "build:prod": "tsc",
     "test": "jest --watchAll --coverage",
@@ -31,7 +32,6 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
-    "@types/debug": "^4.1.12",
     "@types/hapi__hapi": "file:latest@typescript-eslint/eslint-plugin",
     "@types/hapi__joi": "^17.1.14",
     "@types/jest": "^29.5.11",
