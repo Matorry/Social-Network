@@ -1,7 +1,11 @@
+import { Header } from './components/header/header';
+import { AppRoutes } from './routes/app.routes';
+
 function App() {
   return (
     <>
-      <h1>App works!</h1>
+      <Header></Header>
+      <AppRoutes></AppRoutes>
     </>
   );
 }

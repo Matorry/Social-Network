@@ -26,6 +26,18 @@ export class UsersRouter {
 
     server.route({
       method: "GET",
+      path: "/search/{userName}",
+      handler: this.controller.getByUserName.bind(this.controller),
+      options: {
+        pre: [
+          { method: this.authInterceptor.authorization },
+          { method: this.authInterceptor.authentication },
+        ],
+      },
+    });
+
+    server.route({
+      method: "GET",
       path: "/",
       handler: this.controller.getAll.bind(this.controller),
       options: {

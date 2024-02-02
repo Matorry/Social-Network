@@ -17,7 +17,6 @@ export type FollowRelation = {
 export type UserNoId = LoginData & {
   name: string;
   surname: string;
-  imageUrl: string;
   followingRelations: FollowRelation;
   likes: Post[];
   posts: Post[];
