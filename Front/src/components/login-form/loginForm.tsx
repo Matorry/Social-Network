@@ -12,7 +12,7 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (status === 'logged') {
-      navigate('/update-account');
+      navigate('/home');
     }
   });
 
@@ -26,37 +26,39 @@ const LoginForm = () => {
   };
 
   return (
-    <form className={styles.loginContainer}>
-      <h2>Login</h2>
-      <label>Username:</label>
-      <input
-        className={styles.input}
-        type="text"
-        value={userName}
-        onChange={(event) => setUserName(event.target.value)}
-      />
-      <label>Password:</label>
-      <input
-        className={styles.input}
-        type="password"
-        value={passwd}
-        onChange={(event) => setPasswd(event.target.value)}
-      />
-      <button
-        onClick={handleLogin}
-        disabled={isLoading}
-        className={styles.button}
-      >
-        Login
-      </button>
-      {status === 'error' && <div>Error: {error}</div>}
-      <div>
-        Don't have an account?{' '}
-        <Link to="/register" className="register">
-          Register
-        </Link>
-      </div>
-    </form>
+    <main>
+      <form className={styles.loginContainer}>
+        <h2>Login</h2>
+        <label>Username:</label>
+        <input
+          className={styles.input}
+          type="text"
+          value={userName}
+          onChange={(event) => setUserName(event.target.value)}
+        />
+        <label>Password:</label>
+        <input
+          className={styles.input}
+          type="password"
+          value={passwd}
+          onChange={(event) => setPasswd(event.target.value)}
+        />
+        <button
+          onClick={handleLogin}
+          disabled={isLoading}
+          className={styles.button}
+        >
+          Login
+        </button>
+        {status === 'error' && <div>Error: {error}</div>}
+        <div>
+          Don't have an account?{' '}
+          <Link to="/register" className="register">
+            Register
+          </Link>
+        </div>
+      </form>
+    </main>
   );
 };
 

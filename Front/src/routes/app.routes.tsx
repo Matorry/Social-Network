@@ -2,10 +2,11 @@ import { Suspense, lazy } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useUsers } from '../hooks/use.user';
 
-const LoginForm = lazy(() => import('../components/login-form/LoginForm'));
+const LoginForm = lazy(() => import('../components/login-form/loginForm'));
 const RegistrationForm = lazy(
-  () => import('../components/registration-form/RegistrationForm')
+  () => import('../components/registration-form/registrationForm')
 );
+const HomePage = lazy(() => import('../pages/home.page/home.page'));
 export function AppRoutes() {
   const { status, user } = useUsers();
 
@@ -28,6 +29,7 @@ export function AppRoutes() {
           }
         />
         <Route path="/login" element={<LoginForm />}></Route>
+        <Route path="/home" element={<HomePage />}></Route>
         <Route path="*" element={<Navigate to="/login" />}></Route>
       </Routes>
     </Suspense>

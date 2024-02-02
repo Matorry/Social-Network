@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoginData, User, UserNoId } from '../models/user';
 import { ApiUsersRepository } from '../services/user.repository';
+import { actions } from '../slices/user.slice';
 import { AppDispatch, RootState } from '../store/store';
 import {
   deleteThunk,
@@ -36,6 +37,10 @@ export function useUsers() {
     usersDispatch(deleteThunk({ repository, id, token }));
   };
 
+  const logout = () => {
+    usersDispatch(actions.logoutUser());
+  };
+
   return {
     user: usersState.currentUser.user,
     error: usersState.error,
@@ -46,5 +51,6 @@ export function useUsers() {
     registerUser,
     updateUser,
     deleteUser,
+    logout,
   };
 }

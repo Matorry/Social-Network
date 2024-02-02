@@ -1,3 +1,11 @@
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 90vh;
+}
+
 .login-container {
   display: flex;
   justify-content: center;
@@ -10,6 +18,7 @@
   gap: 10px;
   box-shadow: 10px 10px #667eea;
   padding: 30px;
+  align-self: center;
 
   h2 {
     color: #667eea;

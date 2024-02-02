@@ -1,31 +1,37 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 import {
   deleteThunk,
   loginThunk,
   registerThunk,
   updateThunk,
-} from "../thunks/user.thunk";
-import { Logged } from "../types/logged";
+} from '../thunks/user.thunk';
+import { Logged } from '../types/logged';
 
 export type UsersState = {
   currentUser: Logged;
   isLoading: boolean;
-  status: "logged" | "not logged" | "error" | "registered";
+  status: 'logged' | 'not logged' | 'error' | 'registered';
   error: string | undefined;
 };
 
 const initialState: UsersState = {
-  currentUser: { user: {}, token: "" } as Logged,
-
+  currentUser: { user: {}, token: '' } as Logged,
   isLoading: false,
-  status: "not logged",
+  status: 'not logged',
   error: undefined,
 };
 
 const usersSlice = createSlice({
-  name: "users",
+  name: 'users',
   initialState,
-  reducers: {},
+  reducers: {
+    logoutUser: (state) => {
+      state.currentUser = { user: {}, token: '' } as Logged;
+      state.isLoading = false;
+      state.status = 'not logged';
+      state.error = undefined;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(loginThunk.pending, (state) => {
       state.isLoading = true;
@@ -37,14 +43,14 @@ const usersSlice = createSlice({
       (state, { payload }: { payload: Logged }) => {
         state.currentUser = payload;
         state.isLoading = false;
-        state.status = "logged";
+        state.status = 'logged';
         state.error = undefined;
       }
     );
 
     builder.addCase(loginThunk.rejected, (state, action) => {
       state.isLoading = false;
-      state.status = "error";
+      state.status = 'error';
       state.error = action.error.message;
     });
 
@@ -55,13 +61,13 @@ const usersSlice = createSlice({
 
     builder.addCase(registerThunk.fulfilled, (state) => {
       state.isLoading = false;
-      state.status = "registered";
+      state.status = 'registered';
       state.error = undefined;
     });
 
     builder.addCase(registerThunk.rejected, (state, action) => {
       state.isLoading = false;
-      state.status = "error";
+      state.status = 'error';
       state.error = action.error.message;
     });
 
@@ -77,7 +83,7 @@ const usersSlice = createSlice({
 
     builder.addCase(updateThunk.rejected, (state, action) => {
       state.isLoading = false;
-      state.status = "error";
+      state.status = 'error';
       state.error = action.error.message;
     });
 
@@ -87,18 +93,19 @@ const usersSlice = createSlice({
     });
 
     builder.addCase(deleteThunk.fulfilled, (state) => {
-      state.currentUser = { user: {}, token: "" } as Logged;
+      state.currentUser = { user: {}, token: '' } as Logged;
       state.isLoading = false;
-      state.status = "not logged";
+      state.status = 'not logged';
       state.error = undefined;
     });
 
     builder.addCase(deleteThunk.rejected, (state, action) => {
       state.isLoading = false;
-      state.status = "error";
+      state.status = 'error';
       state.error = action.error.message;
     });
   },
 });
 
+export const actions = usersSlice.actions;
 export default usersSlice.reducer;

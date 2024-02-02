@@ -66,81 +66,83 @@ const RegistrationForm = ({ mode, currentUser }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles.registrationForm}>
-      <h2>{mode === 'register' ? 'Register' : 'Update Account'}</h2>
-      <label>Username:</label>
-      <input
-        type="text"
-        name="userName"
-        value={userData.userName}
-        onChange={handleInputChange}
-        className={styles.input}
-        required
-      />
+    <main>
+      <form onSubmit={handleSubmit} className={styles.registrationForm}>
+        <h2>{mode === 'register' ? 'Register' : 'Update Account'}</h2>
+        <label>Username:</label>
+        <input
+          type="text"
+          name="userName"
+          value={userData.userName}
+          onChange={handleInputChange}
+          className={styles.input}
+          required
+        />
 
-      <label>Name:</label>
-      <input
-        type="text"
-        name="name"
-        value={userData.name}
-        onChange={handleInputChange}
-        className={styles.input}
-        required
-      />
+        <label>Name:</label>
+        <input
+          type="text"
+          name="name"
+          value={userData.name}
+          onChange={handleInputChange}
+          className={styles.input}
+          required
+        />
 
-      <label>Surname:</label>
-      <input
-        type="text"
-        name="surname"
-        value={userData.surname}
-        onChange={handleInputChange}
-        className={styles.input}
-        required
-      />
+        <label>Surname:</label>
+        <input
+          type="text"
+          name="surname"
+          value={userData.surname}
+          onChange={handleInputChange}
+          className={styles.input}
+          required
+        />
 
-      <label>Email:</label>
-      <input
-        type="email"
-        name="email"
-        value={userData.email}
-        className={styles.input}
-        onChange={handleInputChange}
-        required
-      />
+        <label>Email:</label>
+        <input
+          type="email"
+          name="email"
+          value={userData.email}
+          className={styles.input}
+          onChange={handleInputChange}
+          required
+        />
 
-      {mode === 'register' && (
-        <>
-          <label>Password:</label>
-          <input
-            type="password"
-            name="passwd"
-            value={userData.passwd}
-            className={styles.input}
-            onChange={handleInputChange}
-            required
-          />
-        </>
-      )}
+        {mode === 'register' && (
+          <>
+            <label>Password:</label>
+            <input
+              type="password"
+              name="passwd"
+              value={userData.passwd}
+              className={styles.input}
+              onChange={handleInputChange}
+              required
+            />
+          </>
+        )}
 
-      <button type="submit" className={styles.button}>
-        {mode === 'register' ? 'Register' : 'Update'}
-      </button>
-      {mode === 'register' && (
-        <span>
-          Already have an account? <Link to="/login">Login</Link>
-        </span>
-      )}
-      {error && <div style={{ color: 'red' }}>{error}</div>}
-      {mode === 'update' && (
-        <button
-          type="button"
-          onClick={handleDeleteAccount}
-          className={styles.delete}
-        >
-          Delete Account
+        <button type="submit" className={styles.button}>
+          {mode === 'register' ? 'Register' : 'Update'}
         </button>
-      )}
-    </form>
+        {mode === 'register' && (
+          <span>
+            Already have an account? <Link to="/login">Login</Link>
+          </span>
+        )}
+        {error && <div style={{ color: 'red' }}>{error}</div>}
+        {mode === 'update' && (
+          <button
+            type="button"
+            onClick={handleDeleteAccount}
+            className={styles.delete}
+          >
+            Delete Account
+          </button>
+        )}
+      </form>
+    </main>
   );
 };
 
