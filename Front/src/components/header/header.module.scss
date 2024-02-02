@@ -10,6 +10,7 @@ $secondary: #667eea;
   z-index: 1;
   border-radius: 0 0 5% 5%;
   background-color: $secondary;
+  padding-inline-start: 2rem;
 
   div {
     display: flex;
@@ -113,7 +114,7 @@ $secondary: #667eea;
       }
     }
 
-    main section {
+    div section {
       display: flex;
     }
   }

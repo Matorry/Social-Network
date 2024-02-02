@@ -1,0 +1,20 @@
+form {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+.input {
+  height: 40px;
+  width: 70vw;
+  max-width: 268.79px;
+  background: #edf2f7;
+  border: none;
+}
+.button {
+  background-color: #667eea;
+  width: 10vw;
+  max-width: 268.79px;
+  height: 40px;
+  border: none;
+  color: white;
+}
