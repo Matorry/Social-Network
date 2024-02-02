@@ -14,7 +14,7 @@ export type UsersState = {
   isLoading: boolean;
   status: 'logged' | 'not logged' | 'error' | 'registered';
   error: string | undefined;
-  userSearch: User | undefined;
+  search: User | undefined;
 };
 
 const initialState: UsersState = {
@@ -22,7 +22,7 @@ const initialState: UsersState = {
   isLoading: false,
   status: 'not logged',
   error: undefined,
-  userSearch: undefined,
+  search: undefined,
 };
 
 const usersSlice = createSlice({
@@ -112,7 +112,7 @@ const usersSlice = createSlice({
     builder.addCase(
       getUserByUsernameThunk.fulfilled,
       (state, { payload }: PayloadAction<User>) => {
-        state.userSearch = payload;
+        state.search = payload;
         state.error = undefined;
         state.isLoading = false;
       }

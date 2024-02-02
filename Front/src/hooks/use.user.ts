@@ -16,10 +16,9 @@ export const urlBaseUsers = 'http://localhost:3000';
 
 export function useUsers() {
   const repository = useMemo(() => new ApiUsersRepository(urlBaseUsers), []);
-  const { currentUser } = useSelector((state: RootState) => state.usersState);
-  const token = currentUser.token;
-
   const usersState = useSelector((state: RootState) => state.usersState);
+  const token = usersState.currentUser.token;
+
   const usersDispatch = useDispatch<AppDispatch>();
 
   const loginUser = async (user: LoginData) => {
@@ -54,11 +53,12 @@ export function useUsers() {
   };
 
   return {
-    user: usersState.currentUser.user,
+    currentUser: usersState.currentUser.user,
     error: usersState.error,
     isLoading: usersState.isLoading,
     status: usersState.status,
     token: usersState.currentUser.token,
+    search: usersState.search,
     loginUser,
     registerUser,
     updateUser,

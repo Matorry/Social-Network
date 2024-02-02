@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useUsers } from '../../hooks/use.user';
 import styles from './searchForm.module.scss';
 
 const SearchForm: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const { searchUser, isLoading, error, user } = useUsers();
+  const { searchUser, isLoading, error, search } = useUsers();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -32,7 +33,12 @@ const SearchForm: React.FC = () => {
         </div>
         {isLoading && <p>Loading...</p>}
         {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-        {user && <p>{user.userName}</p>}
+        {search && (
+          <span>
+            User found:
+            <Link to={`/user/${search?.id}`}>{search?.userName}</Link>
+          </span>
+        )}
       </form>
     </>
   );
