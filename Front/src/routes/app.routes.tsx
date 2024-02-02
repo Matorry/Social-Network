@@ -1,9 +1,11 @@
-import { Suspense, lazy } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
-import { useUsers } from "../hooks/use.user";
+import { Suspense, lazy } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { useUsers } from '../hooks/use.user';
 
-const LoginForm = lazy(() => import("../components/LoginForm"));
-const RegistrationForm = lazy(() => import("../components/RegistrationForm"));
+const LoginForm = lazy(() => import('../components/login-form/LoginForm'));
+const RegistrationForm = lazy(
+  () => import('../components/registration-form/RegistrationForm')
+);
 export function AppRoutes() {
   const { status, user } = useUsers();
 
@@ -18,7 +20,7 @@ export function AppRoutes() {
         <Route
           path="/update-account"
           element={
-            status === "logged" ? (
+            status === 'logged' ? (
               <RegistrationForm mode="update" currentUser={user} />
             ) : (
               <Navigate to="/" />

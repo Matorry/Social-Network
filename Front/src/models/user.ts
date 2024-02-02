@@ -1,10 +1,9 @@
-import { WithId } from "../types/withId";
+import { WithId } from '../types/withId';
 
 export type UserNoId = {
   userName: string;
   name: string;
   surname: string;
-  imageUrl: string;
   followingRelations: FollowRelation;
   likes: [];
   posts: [];
