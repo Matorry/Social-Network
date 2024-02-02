@@ -14,6 +14,7 @@ export class UsersController extends Controller<User> {
     try {
       let user = request.payload as UserNoId;
       user.passwd = await Auth.hash(user.passwd);
+
       user = await this.repo.post(user);
       return response.response(user).code(201);
     } catch (error) {
@@ -44,6 +45,25 @@ export class UsersController extends Controller<User> {
       const token = Auth.signToken(payload);
 
       return response.response({ user, token }).code(200);
+    } catch (error) {
+      return response.response({ error: "Internal Server Error" }).code(500);
+    }
+  }
+
+  async getByUserName(request: Request, response: ResponseToolkit) {
+    const { userName } = request.params;
+
+    try {
+      const users = await this.repo.search({
+        key: "userName",
+        value: userName,
+      });
+
+      if (users.length > 0) {
+        return response.response(users).code(200);
+      }
+
+      return response.response({ error: "Users not found" }).code(404);
     } catch (error) {
       return response.response({ error: "Internal Server Error" }).code(500);
     }

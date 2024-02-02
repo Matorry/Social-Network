@@ -24,9 +24,6 @@ const userSchema = new Schema<User>({
     type: String,
     required: true,
   },
-  imageUrl: {
-    type: String,
-  },
   followingRelations: {
     followers: [
       {
