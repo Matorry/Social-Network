@@ -12,10 +12,10 @@ export function Header() {
   return (
     <>
       {token ? (
-        <nav className={style['nav-container']}>
+        <header className={style.header}>
           <h1>Social Network</h1>
-          <div>
-            <ul style={isMenuOpen ? { right: '0%' } : { right: '-150%' }}>
+          <nav>
+            <ul className={isMenuOpen ? '' : style.hidden}>
               <li>
                 <Link to={'/home'}>Home</Link>
               </li>
@@ -23,9 +23,6 @@ export function Header() {
                 <Link to={'/my-posts'}>My Posts</Link>
               </li>
               <>
-                <li>
-                  <Link to={'/new-post'}>New Post</Link>
-                </li>
                 <li>
                   <Link to={'/followers'}>My account</Link>
                 </li>
@@ -45,8 +42,8 @@ export function Header() {
             >
               {isMenuOpen ? <AiOutlineMenuFold /> : <AiOutlineMenuUnfold />}
             </section>
-          </div>
-        </nav>
+          </nav>
+        </header>
       ) : (
         <header>
           <h1>Social Network</h1>

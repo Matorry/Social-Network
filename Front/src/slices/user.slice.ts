@@ -1,6 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { User } from '../models/user';
 import {
   deleteThunk,
+  getUserByUsernameThunk,
   loginThunk,
   registerThunk,
   updateThunk,
@@ -12,6 +14,7 @@ export type UsersState = {
   isLoading: boolean;
   status: 'logged' | 'not logged' | 'error' | 'registered';
   error: string | undefined;
+  userSearch: User | undefined;
 };
 
 const initialState: UsersState = {
@@ -19,6 +22,7 @@ const initialState: UsersState = {
   isLoading: false,
   status: 'not logged',
   error: undefined,
+  userSearch: undefined,
 };
 
 const usersSlice = createSlice({
@@ -92,14 +96,29 @@ const usersSlice = createSlice({
       state.error = undefined;
     });
 
-    builder.addCase(deleteThunk.fulfilled, (state) => {
-      state.currentUser = { user: {}, token: '' } as Logged;
+    builder.addCase(deleteThunk.fulfilled, () => {});
+
+    builder.addCase(deleteThunk.rejected, (state, action) => {
       state.isLoading = false;
-      state.status = 'not logged';
+      state.status = 'error';
+      state.error = action.error.message;
+    });
+
+    builder.addCase(getUserByUsernameThunk.pending, (state) => {
+      state.isLoading = true;
       state.error = undefined;
     });
 
-    builder.addCase(deleteThunk.rejected, (state, action) => {
+    builder.addCase(
+      getUserByUsernameThunk.fulfilled,
+      (state, { payload }: PayloadAction<User>) => {
+        state.userSearch = payload;
+        state.error = undefined;
+        state.isLoading = false;
+      }
+    );
+
+    builder.addCase(getUserByUsernameThunk.rejected, (state, action) => {
       state.isLoading = false;
       state.status = 'error';
       state.error = action.error.message;

@@ -2,6 +2,8 @@ form {
   display: flex;
   flex-direction: row;
   gap: 1rem;
+  align-items: center;
+  justify-content: center;
 }
 .input {
   height: 40px;
@@ -17,4 +19,24 @@ form {
   height: 40px;
   border: none;
   color: white;
+}
+
+@media (width < 700px) {
+  form {
+    width: 350px;
+    gap: none;
+  }
+
+  label {
+    width: 50px;
+  }
+  .input {
+    height: 40px;
+    width: 150px;
+  }
+
+  .button {
+    width: 80px;
+    height: 40px;
+  }
 }

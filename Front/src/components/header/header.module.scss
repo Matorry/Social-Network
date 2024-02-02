@@ -1,27 +1,19 @@
 $primary: white;
 $secondary: #667eea;
 
-.nav-container {
+.header {
   position: sticky;
   top: 0;
   display: flex;
-  width: 100%;
   transition: all 0.5s ease;
   z-index: 1;
-  border-radius: 0 0 5% 5%;
   background-color: $secondary;
-  padding-inline-start: 2rem;
+  padding-inline: 2rem;
+  justify-content: space-between;
 
-  div {
+  nav {
     display: flex;
-    width: 100%;
-    justify-content: space-between;
     align-items: center;
-    padding: 1em 3em;
-
-    img {
-      max-height: 4rem;
-    }
 
     ul {
       display: flex;
@@ -90,18 +82,22 @@ $secondary: #667eea;
   }
 
   @media (width < 700px) {
+    .hidden {
+      display: none;
+    }
     ul {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: flex-end;
       position: absolute;
-      top: 5.25rem;
+      top: 4rem;
       padding: 0 3em;
       width: 100%;
-      height: 85vh;
+      height: 90vh;
       background: linear-gradient(to right, transparent, #667eea);
       transition: all 0.5s ease;
+      right: 0%;
 
       li {
         margin: 1em 0;
@@ -114,7 +110,7 @@ $secondary: #667eea;
       }
     }
 
-    div section {
+    nav section {
       display: flex;
     }
   }

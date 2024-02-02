@@ -6,6 +6,7 @@ import { actions } from '../slices/user.slice';
 import { AppDispatch, RootState } from '../store/store';
 import {
   deleteThunk,
+  getUserByUsernameThunk,
   loginThunk,
   registerThunk,
   updateThunk,
@@ -15,8 +16,8 @@ export const urlBaseUsers = 'http://localhost:3000';
 
 export function useUsers() {
   const repository = useMemo(() => new ApiUsersRepository(urlBaseUsers), []);
-  const userState = useSelector((state: RootState) => state.usersState);
-  const token = userState.currentUser.token;
+  const { currentUser } = useSelector((state: RootState) => state.usersState);
+  const token = currentUser.token;
 
   const usersState = useSelector((state: RootState) => state.usersState);
   const usersDispatch = useDispatch<AppDispatch>();
@@ -35,6 +36,17 @@ export function useUsers() {
 
   const deleteUser = async (id: string) => {
     usersDispatch(deleteThunk({ repository, id, token }));
+    logout();
+  };
+
+  const searchUser = async (userName: string) => {
+    usersDispatch(
+      getUserByUsernameThunk({
+        repository,
+        userName,
+        token,
+      })
+    );
   };
 
   const logout = () => {
@@ -52,5 +64,6 @@ export function useUsers() {
     updateUser,
     deleteUser,
     logout,
+    searchUser,
   };
 }
