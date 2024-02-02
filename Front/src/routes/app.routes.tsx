@@ -32,7 +32,7 @@ export function AppRoutes() {
         <Route
           path="/home"
           element={
-            status === 'logged' ? <HomePage /> : <Navigate to="/login" />
+            status === 'not logged' ? <Navigate to="/login" /> : <HomePage />
           }
         ></Route>
         <Route path="*" element={<Navigate to="/login" />}></Route>

@@ -4,7 +4,7 @@ import styles from './searchForm.module.scss';
 
 const SearchForm: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const { searchUser, isLoading, error } = useUsers();
+  const { searchUser, isLoading, error, user } = useUsers();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -18,20 +18,22 @@ const SearchForm: React.FC = () => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <label>Search person:</label>
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={handleInputChange}
-          className={styles.input}
-        />
-
-        <button type="submit" className={styles.button}>
-          Search
-        </button>
+        <div>
+          <label>Search person:</label>
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={handleInputChange}
+            className={styles.input}
+          />
+          <button type="submit" className={styles.button}>
+            Search
+          </button>
+        </div>
+        {isLoading && <p>Loading...</p>}
+        {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+        {user && <p>{user.userName}</p>}
       </form>
-      {isLoading && <p>Loading...</p>}
-      {error && <p style={{ color: 'red' }}>Error: {error}</p>}
     </>
   );
 };

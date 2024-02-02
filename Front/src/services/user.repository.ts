@@ -76,15 +76,12 @@ export class ApiUsersRepository implements Repository<User> {
   }
 
   async getByUsername(userName: string, token: string): Promise<User> {
-    const response = await fetch(
-      `${this.urlBase}/search?userName=${userName}`,
-      {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await fetch(`${this.urlBase}/search/${userName}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     if (!response.ok)
       throw new Error(`Error ${response.status}: ${response.statusText}`);

@@ -1,9 +1,14 @@
 form {
   display: flex;
-  flex-direction: row;
-  gap: 1rem;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  div {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+  }
 }
 .input {
   height: 40px;
@@ -19,6 +24,12 @@ form {
   height: 40px;
   border: none;
   color: white;
+}
+:root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (width < 700px) {
