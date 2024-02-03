@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-// import { usePosts } from '../../hooks';
+import { usePosts } from '../../hooks/use.post';
 import { useUsers } from '../../hooks/use.user';
 import { PostNoId } from '../../models/post';
 import styles from './postForm.module.scss';
 
 const PostForm: React.FC = () => {
   const { currentUser } = useUsers();
-  // const { addPost } = usePosts();
+  const { createPost } = usePosts();
 
   const [postFormData, setPostFormData] = useState<PostNoId>({
     id: '',
@@ -31,7 +31,7 @@ const PostForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // await addPost(postFormData);
+    await createPost(postFormData);
 
     setPostFormData({
       id: '',
