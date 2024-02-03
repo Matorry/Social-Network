@@ -7,6 +7,7 @@
 .input {
   height: 40px;
   width: 70vw;
+  min-width: 70vw;
   max-width: 268.79px;
   background: #edf2f7;
   border: none;
@@ -16,6 +17,7 @@
   background-color: #667eea;
   width: 10vw;
   max-width: 400px;
+  min-width: 70vw;
   height: 40px;
   border: none;
   color: white;
@@ -25,6 +27,7 @@
   height: 400px;
   width: 400px;
   max-width: 70vw;
+  min-width: 70vw;
   background: #edf2f7;
   border: none;
 }
