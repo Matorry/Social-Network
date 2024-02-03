@@ -1,4 +1,5 @@
 import { WithId } from '../types/withId';
+import { Post } from './post';
 
 export type UserNoId = {
   userName: string;
@@ -7,7 +8,7 @@ export type UserNoId = {
   followers: User[];
   followings: User[];
   likes: User[];
-  posts: [];
+  posts: Post[];
   comments: [];
   isPublic: boolean;
   email: string;
