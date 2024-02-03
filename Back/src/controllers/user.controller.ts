@@ -60,10 +60,64 @@ export class UsersController extends Controller<User> {
       });
 
       if (users.length > 0) {
-        return response.response(users).code(200);
+        return response.response(users[0]).code(200);
       }
 
       return response.response({ error: "Users not found" }).code(404);
+    } catch (error) {
+      return response.response({ error: "Internal Server Error" }).code(500);
+    }
+  }
+
+  async follow(request: Request, response: ResponseToolkit) {
+    try {
+      const { id } = request.params;
+      const currentUser = await this.repo.get(id);
+      const newFollowingUserId = request.payload as string;
+      const newFollowingUser = await this.repo.get(newFollowingUserId);
+      if (
+        !currentUser.followings.some(
+          (user) => user.id === newFollowingUser.id,
+        ) &&
+        !newFollowingUser.followers.some((user) => user.id === currentUser.id)
+      ) {
+        currentUser.followings.push(newFollowingUser);
+
+        newFollowingUser.followers.push(currentUser);
+      }
+
+      await this.repo.patch(currentUser.id, currentUser);
+      await this.repo.patch(newFollowingUser.id, newFollowingUser);
+      return response.response(currentUser).code(200);
+    } catch (error) {
+      return response.response({ error: "Internal Server Error" }).code(500);
+    }
+  }
+
+  async unfollow(request: Request, response: ResponseToolkit) {
+    try {
+      const { id } = request.params;
+      const currentUser = await this.repo.get(id);
+      const unfollowUserId = request.payload as string;
+      const unfollowUser = await this.repo.get(unfollowUserId);
+
+      const indexInFollowings = currentUser.followings.findIndex(
+        (user) => user.id === unfollowUser.id,
+      );
+      if (indexInFollowings !== -1) {
+        currentUser.followings.splice(indexInFollowings, 1);
+      }
+
+      const indexInFollowers = unfollowUser.followers.findIndex(
+        (user) => user.id === currentUser.id,
+      );
+      if (indexInFollowers !== -1) {
+        unfollowUser.followers.splice(indexInFollowers, 1);
+      }
+
+      await this.repo.patch(currentUser.id, currentUser);
+      await this.repo.patch(unfollowUser.id, unfollowUser);
+      return response.response(currentUser).code(200);
     } catch (error) {
       return response.response({ error: "Internal Server Error" }).code(500);
     }

@@ -10,7 +10,10 @@ export class UserMongoRepository implements Repository<User> {
   }
 
   async get(id: string): Promise<User> {
-    const data = await UserModel.findById(id).exec();
+    const data = await UserModel.findById(id)
+      .populate("followers")
+      .populate("followings")
+      .exec();
     if (!data)
       throw new HttpError(404, "Not Found", "User not found in file system", {
         cause: "Trying getById",
@@ -26,11 +29,15 @@ export class UserMongoRepository implements Repository<User> {
   async patch(id: string, newData: Partial<User>): Promise<User> {
     const data = await UserModel.findByIdAndUpdate(id, newData, {
       new: true,
-    }).exec();
+    })
+      .populate("followers")
+      .populate("followings")
+      .exec();
     if (!data)
       throw new HttpError(404, "Not Found", "User not found in file system", {
         cause: "Trying update",
       });
+    console.log(data);
     return data;
   }
 
@@ -49,7 +56,10 @@ export class UserMongoRepository implements Repository<User> {
     key: string;
     value: unknown;
   }): Promise<User[]> {
-    const data = await UserModel.find({ [key]: value }).exec();
+    const data = await UserModel.find({ [key]: value })
+      .populate("followers")
+      .populate("followings")
+      .exec();
     return data;
   }
 }
