@@ -1,5 +1,6 @@
 import { Suspense, lazy } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import PostForm from '../components/post-form/postForm';
 import { useUsers } from '../hooks/use.user';
 
 const LoginForm = lazy(() => import('../components/login-form/loginForm'));
@@ -42,6 +43,8 @@ export function AppRoutes() {
           path="/youraccount"
           element={<UserDetail user={currentUser} />}
         ></Route>
+
+        <Route path="/new-posts" element={<PostForm />}></Route>
 
         <Route path="/login" element={<LoginForm />}></Route>
 

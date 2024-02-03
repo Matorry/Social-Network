@@ -1,0 +1,30 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.input {
+  height: 40px;
+  width: 70vw;
+  max-width: 268.79px;
+  background: #edf2f7;
+  border: none;
+}
+
+.button {
+  background-color: #667eea;
+  width: 10vw;
+  max-width: 400px;
+  height: 40px;
+  border: none;
+  color: white;
+}
+
+.text {
+  height: 400px;
+  width: 400px;
+  max-width: 70vw;
+  background: #edf2f7;
+  border: none;
+}
