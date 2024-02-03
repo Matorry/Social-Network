@@ -6,10 +6,7 @@ import { UserMongoRepository } from "../repository/user.mongo.repository.js";
 import { Controller } from "./controller.js";
 
 export class PostController extends Controller<Post> {
-  constructor(
-    protected postRepo: PostMongoRepository,
-    userRepo: UserMongoRepository,
-  ) {
+  constructor(protected postRepo: PostMongoRepository) {
     super(postRepo);
   }
 
