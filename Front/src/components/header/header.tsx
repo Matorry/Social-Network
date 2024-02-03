@@ -17,14 +17,20 @@ export function Header() {
           <nav>
             <ul className={isMenuOpen ? '' : style.hidden}>
               <li>
-                <Link to={'/home'}>Home</Link>
+                <Link to={'/home'} onClick={() => setIsMenuOpen(false)}>
+                  Home
+                </Link>
               </li>
               <li>
-                <Link to={'/my-posts'}>My Posts</Link>
+                <Link to={'/my-posts'} onClick={() => setIsMenuOpen(false)}>
+                  My Posts
+                </Link>
               </li>
               <>
                 <li>
-                  <Link to={'/followers'}>My account</Link>
+                  <Link to={`youraccount`} onClick={() => setIsMenuOpen(false)}>
+                    My account
+                  </Link>
                 </li>
                 <li onClick={logout} className={style.login}>
                   <a href="/">Logout</a>
@@ -45,7 +51,7 @@ export function Header() {
           </nav>
         </header>
       ) : (
-        <header>
+        <header className={style.header}>
           <h1>Social Network</h1>
         </header>
       )}

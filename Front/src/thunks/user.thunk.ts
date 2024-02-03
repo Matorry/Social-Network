@@ -23,9 +23,42 @@ export const registerThunk = createAsyncThunk<
 
 export const updateThunk = createAsyncThunk<
   User,
-  { repository: ApiUsersRepository; user: User; token: string }
->('users/update', async ({ repository, user, token }) => {
-  const updatedUser = await repository.update(user, user.id, token);
+  {
+    repository: ApiUsersRepository;
+    user: Partial<User>;
+    token: string;
+    id: string;
+  }
+>('users/update', async ({ repository, user, token, id }) => {
+  const updatedUser = await repository.update(user, id, token);
+
+  return updatedUser;
+});
+
+export const followThunk = createAsyncThunk<
+  User,
+  {
+    repository: ApiUsersRepository;
+    user: User;
+    token: string;
+    id: string;
+  }
+>('users/follow', async ({ repository, user, token, id }) => {
+  const updatedUser = await repository.follow(user, id, token);
+
+  return updatedUser;
+});
+
+export const unfollowThunk = createAsyncThunk<
+  User,
+  {
+    repository: ApiUsersRepository;
+    user: User;
+    token: string;
+    id: string;
+  }
+>('users/unfollow', async ({ repository, user, token, id }) => {
+  const updatedUser = await repository.unfollow(user, id, token);
 
   return updatedUser;
 });
@@ -39,11 +72,20 @@ export const deleteThunk = createAsyncThunk<
   return deleteUser;
 });
 
+export const getUserByIdThunk = createAsyncThunk<
+  User,
+  { repository: ApiUsersRepository; id: string; token: string }
+>('users/searchById', async ({ repository, id, token }) => {
+  const User = await repository.getById(id, token);
+
+  return User;
+});
+
 export const getUserByUsernameThunk = createAsyncThunk<
   User,
   { repository: ApiUsersRepository; userName: string; token: string }
->('users/search', async ({ repository, userName, token }) => {
-  const deleteUser = await repository.getByUsername(userName, token);
+>('users/searchByName', async ({ repository, userName, token }) => {
+  const User = await repository.getByUsername(userName, token);
 
-  return deleteUser;
+  return User;
 });

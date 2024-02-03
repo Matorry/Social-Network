@@ -2,9 +2,12 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { User } from '../models/user';
 import {
   deleteThunk,
+  followThunk,
+  getUserByIdThunk,
   getUserByUsernameThunk,
   loginThunk,
   registerThunk,
+  unfollowThunk,
   updateThunk,
 } from '../thunks/user.thunk';
 import { Logged } from '../types/logged';
@@ -14,7 +17,8 @@ export type UsersState = {
   isLoading: boolean;
   status: 'logged' | 'not logged' | 'error' | 'registered';
   error: string | undefined;
-  userSearch: User | undefined;
+  search: User | undefined;
+  userDetail: User | undefined;
 };
 
 const initialState: UsersState = {
@@ -22,7 +26,8 @@ const initialState: UsersState = {
   isLoading: false,
   status: 'not logged',
   error: undefined,
-  userSearch: undefined,
+  search: undefined,
+  userDetail: undefined,
 };
 
 const usersSlice = createSlice({
@@ -34,6 +39,12 @@ const usersSlice = createSlice({
       state.isLoading = false;
       state.status = 'not logged';
       state.error = undefined;
+    },
+    setUserDetail: (state, { payload }: { payload: User }) => {
+      state.userDetail = payload;
+    },
+    setUserSearch: (state) => {
+      state.search = undefined;
     },
   },
   extraReducers: (builder) => {
@@ -80,10 +91,14 @@ const usersSlice = createSlice({
       state.error = undefined;
     });
 
-    builder.addCase(updateThunk.fulfilled, (state) => {
-      state.isLoading = false;
-      state.error = undefined;
-    });
+    builder.addCase(
+      updateThunk.fulfilled,
+      (state, { payload }: { payload: User }) => {
+        state.currentUser.user = payload;
+        state.isLoading = false;
+        state.error = undefined;
+      }
+    );
 
     builder.addCase(updateThunk.rejected, (state, action) => {
       state.isLoading = false;
@@ -104,6 +119,26 @@ const usersSlice = createSlice({
       state.error = action.error.message;
     });
 
+    builder.addCase(getUserByIdThunk.pending, (state) => {
+      state.isLoading = true;
+      state.error = undefined;
+    });
+
+    builder.addCase(
+      getUserByIdThunk.fulfilled,
+      (state, { payload }: PayloadAction<User>) => {
+        state.userDetail = payload;
+        state.error = undefined;
+        state.isLoading = false;
+      }
+    );
+
+    builder.addCase(getUserByIdThunk.rejected, (state, action) => {
+      state.isLoading = false;
+      state.status = 'error';
+      state.error = action.error.message;
+    });
+
     builder.addCase(getUserByUsernameThunk.pending, (state) => {
       state.isLoading = true;
       state.error = undefined;
@@ -112,13 +147,53 @@ const usersSlice = createSlice({
     builder.addCase(
       getUserByUsernameThunk.fulfilled,
       (state, { payload }: PayloadAction<User>) => {
-        state.userSearch = payload;
+        state.search = payload;
         state.error = undefined;
         state.isLoading = false;
       }
     );
 
     builder.addCase(getUserByUsernameThunk.rejected, (state, action) => {
+      state.isLoading = false;
+      state.status = 'error';
+      state.error = action.error.message;
+    });
+
+    builder.addCase(followThunk.pending, (state) => {
+      state.isLoading = true;
+      state.error = undefined;
+    });
+
+    builder.addCase(
+      followThunk.fulfilled,
+      (state, { payload }: { payload: User }) => {
+        state.currentUser.user = payload;
+        state.isLoading = false;
+        state.error = undefined;
+      }
+    );
+
+    builder.addCase(followThunk.rejected, (state, action) => {
+      state.isLoading = false;
+      state.status = 'error';
+      state.error = action.error.message;
+    });
+
+    builder.addCase(unfollowThunk.pending, (state) => {
+      state.isLoading = true;
+      state.error = undefined;
+    });
+
+    builder.addCase(
+      unfollowThunk.fulfilled,
+      (state, { payload }: { payload: User }) => {
+        state.currentUser.user = payload;
+        state.isLoading = false;
+        state.error = undefined;
+      }
+    );
+
+    builder.addCase(unfollowThunk.rejected, (state, action) => {
       state.isLoading = false;
       state.status = 'error';
       state.error = action.error.message;

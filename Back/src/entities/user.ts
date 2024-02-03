@@ -9,20 +9,16 @@ export type LoginData = {
   passwd: string;
 };
 
-export type FollowRelation = {
-  followers: User[];
-  followings: User[];
-};
-
 export type UserNoId = LoginData & {
   name: string;
   surname: string;
-  followingRelations: FollowRelation;
   likes: Post[];
   posts: Post[];
   isPublic: boolean;
   comments: Comment[];
   email: string;
+  followers: User[];
+  followings: User[];
 };
 
 export type User = WithId & UserNoId;

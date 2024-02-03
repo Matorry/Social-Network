@@ -24,22 +24,22 @@ const userSchema = new Schema<User>({
     type: String,
     required: true,
   },
-  followingRelations: {
-    followers: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-      },
-    ],
-    followings: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-      },
-    ],
-  },
+
+  followers: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+  ],
+  followings: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+  ],
+
   isPublic: {
     type: Boolean,
     required: true,

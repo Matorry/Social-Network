@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUsers } from '../../hooks/use.user';
-import { UserNoId } from '../../models/user';
+import { User, UserNoId } from '../../models/user';
 import styles from './registrationForm.module.scss';
 
 type Props = {
   mode: 'register' | 'update';
-  currentUser?: UserNoId;
+  currentUser?: User;
 };
 
 const RegistrationForm = ({ mode, currentUser }: Props) => {
-  const { registerUser, updateUser, deleteUser, error, user } = useUsers();
+  const { registerUser, updateUser, deleteUser, error } = useUsers();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,8 +23,9 @@ const RegistrationForm = ({ mode, currentUser }: Props) => {
     userName: '',
     name: '',
     surname: '',
-    followingRelations: { followers: [], followings: [] },
-    isPublic: true,
+    followers: [],
+    followings: [],
+    isPublic: false,
     email: '',
     passwd: '',
     comments: [],
@@ -33,8 +34,12 @@ const RegistrationForm = ({ mode, currentUser }: Props) => {
   });
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
+    const { name, value, type, checked } = event.target;
     setUserData((prevUserData) => ({ ...prevUserData, [name]: value }));
+    setUserData((prevUserData) => ({
+      ...prevUserData,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -49,7 +54,7 @@ const RegistrationForm = ({ mode, currentUser }: Props) => {
       return;
     }
     try {
-      await updateUser({ ...userData, id: user.id });
+      await updateUser({ ...userData, id: currentUser!.id }, currentUser!.id);
       navigate('/login');
     } catch (error) {
       console.error('Error during registration:', error);
@@ -58,7 +63,7 @@ const RegistrationForm = ({ mode, currentUser }: Props) => {
 
   const handleDeleteAccount = async () => {
     try {
-      await deleteUser(user.id);
+      await deleteUser(currentUser!.id);
       navigate('/login');
     } catch (error) {
       console.error('Error deleting account:', error);
@@ -122,6 +127,17 @@ const RegistrationForm = ({ mode, currentUser }: Props) => {
             />
           </>
         )}
+
+        <div className={styles.checkboxContainer}>
+          <label>Profile Privacy:</label>
+          <input
+            type="checkbox"
+            name="isPublic"
+            checked={userData.isPublic}
+            onChange={handleInputChange}
+          />
+          <span>Public</span>
+        </div>
 
         <button type="submit" className={styles.button}>
           {mode === 'register' ? 'Register' : 'Update'}

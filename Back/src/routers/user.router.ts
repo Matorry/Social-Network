@@ -83,5 +83,29 @@ export class UsersRouter {
         ],
       },
     });
+
+    server.route({
+      method: "PATCH",
+      path: "/follow/{id}",
+      handler: this.controller.follow.bind(this.controller),
+      options: {
+        pre: [
+          { method: this.authInterceptor.authorization },
+          { method: this.authInterceptor.authentication },
+        ],
+      },
+    });
+
+    server.route({
+      method: "PATCH",
+      path: "/unfollow/{id}",
+      handler: this.controller.unfollow.bind(this.controller),
+      options: {
+        pre: [
+          { method: this.authInterceptor.authorization },
+          { method: this.authInterceptor.authentication },
+        ],
+      },
+    });
   }
 }

@@ -6,9 +6,12 @@ import { actions } from '../slices/user.slice';
 import { AppDispatch, RootState } from '../store/store';
 import {
   deleteThunk,
+  followThunk,
+  getUserByIdThunk,
   getUserByUsernameThunk,
   loginThunk,
   registerThunk,
+  unfollowThunk,
   updateThunk,
 } from '../thunks/user.thunk';
 
@@ -16,10 +19,9 @@ export const urlBaseUsers = 'http://localhost:3000';
 
 export function useUsers() {
   const repository = useMemo(() => new ApiUsersRepository(urlBaseUsers), []);
-  const { currentUser } = useSelector((state: RootState) => state.usersState);
-  const token = currentUser.token;
-
   const usersState = useSelector((state: RootState) => state.usersState);
+  const token = usersState.currentUser.token;
+
   const usersDispatch = useDispatch<AppDispatch>();
 
   const loginUser = async (user: LoginData) => {
@@ -30,8 +32,8 @@ export function useUsers() {
     usersDispatch(registerThunk({ repository, user }));
   };
 
-  const updateUser = async (user: User) => {
-    usersDispatch(updateThunk({ repository, user, token }));
+  const updateUser = async (user: Partial<User>, id: string) => {
+    usersDispatch(updateThunk({ repository, user, token, id }));
   };
 
   const deleteUser = async (id: string) => {
@@ -39,7 +41,26 @@ export function useUsers() {
     logout();
   };
 
-  const searchUser = async (userName: string) => {
+  const followUser = async (id: string, user: User) => {
+    await usersDispatch(followThunk({ repository, id, token, user }));
+  };
+
+  const unfollowUser = async (id: string, user: User) => {
+    await usersDispatch(unfollowThunk({ repository, id, token, user }));
+  };
+
+  const getUserById = async (id: string) => {
+    usersDispatch(
+      getUserByIdThunk({
+        repository,
+        id,
+        token,
+      })
+    );
+    setUserSearch();
+  };
+
+  const searchUserByName = async (userName: string) => {
     usersDispatch(
       getUserByUsernameThunk({
         repository,
@@ -53,17 +74,26 @@ export function useUsers() {
     usersDispatch(actions.logoutUser());
   };
 
+  const setUserSearch = () => {
+    usersDispatch(actions.setUserSearch());
+  };
+
   return {
-    user: usersState.currentUser.user,
+    currentUser: usersState.currentUser.user,
     error: usersState.error,
     isLoading: usersState.isLoading,
     status: usersState.status,
     token: usersState.currentUser.token,
+    search: usersState.search,
+    userDetail: usersState.userDetail,
     loginUser,
     registerUser,
     updateUser,
     deleteUser,
     logout,
-    searchUser,
+    searchUserByName,
+    followUser,
+    getUserById,
+    unfollowUser,
   };
 }
