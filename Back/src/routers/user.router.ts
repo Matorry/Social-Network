@@ -26,7 +26,7 @@ export class UsersRouter {
 
     server.route({
       method: "GET",
-      path: "/search/{userName}",
+      path: "/user/search/{userName}",
       handler: this.controller.getByUserName.bind(this.controller),
       options: {
         pre: [
@@ -38,7 +38,7 @@ export class UsersRouter {
 
     server.route({
       method: "GET",
-      path: "/",
+      path: "/user/",
       handler: this.controller.getAll.bind(this.controller),
       options: {
         pre: [
@@ -50,7 +50,7 @@ export class UsersRouter {
 
     server.route({
       method: "GET",
-      path: "/{id}",
+      path: "/user/{id}",
       handler: this.controller.get.bind(this.controller),
       options: {
         pre: [
@@ -62,7 +62,7 @@ export class UsersRouter {
 
     server.route({
       method: "DELETE",
-      path: "/delete/{id}",
+      path: "/user/delete/{id}",
       handler: this.controller.delete.bind(this.controller),
       options: {
         pre: [
@@ -74,7 +74,7 @@ export class UsersRouter {
 
     server.route({
       method: "PATCH",
-      path: "/patch/{id}",
+      path: "/user/patch/{id}",
       handler: this.controller.patch.bind(this.controller),
       options: {
         pre: [
@@ -86,7 +86,7 @@ export class UsersRouter {
 
     server.route({
       method: "PATCH",
-      path: "/follow/{id}",
+      path: "/user/follow/{id}",
       handler: this.controller.follow.bind(this.controller),
       options: {
         pre: [
@@ -98,7 +98,7 @@ export class UsersRouter {
 
     server.route({
       method: "PATCH",
-      path: "/unfollow/{id}",
+      path: "/user/unfollow/{id}",
       handler: this.controller.unfollow.bind(this.controller),
       options: {
         pre: [
