@@ -28,10 +28,7 @@ export function Header() {
               </li>
               <>
                 <li>
-                  <Link
-                    to={'/youraccount'}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
+                  <Link to={`youraccount`} onClick={() => setIsMenuOpen(false)}>
                     My account
                   </Link>
                 </li>

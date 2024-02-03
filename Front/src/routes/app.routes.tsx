@@ -10,7 +10,7 @@ const HomePage = lazy(() => import('../pages/home.page/home.page'));
 const UserDetail = lazy(() => import('../components/userDetail/userDetail'));
 
 export function AppRoutes() {
-  const { status, currentUser, search } = useUsers();
+  const { status, currentUser, userDetail } = useUsers();
 
   return (
     <Suspense>
@@ -35,7 +35,7 @@ export function AppRoutes() {
 
         <Route
           path="/user/:userId"
-          element={<UserDetail user={search!} />}
+          element={<UserDetail user={userDetail!} />}
         ></Route>
 
         <Route

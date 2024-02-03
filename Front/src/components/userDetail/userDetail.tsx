@@ -4,15 +4,60 @@ import { User } from '../../models/user';
 import styles from './userDetail.module.scss';
 
 type Props = {
-  user: User | undefined;
+  user?: User;
 };
 
 const UserDetail = ({ user }: Props) => {
-  const { currentUser } = useUsers();
+  const { currentUser, followUser, getUserById, unfollowUser } = useUsers();
+
   const isCurrentUser = currentUser && currentUser.id === user?.id;
-  const handleFollow = () => {
-    console.log(`Following user: ${user?.userName}`);
+
+  const handleFollow = async () => {
+    if (user) {
+      await followUser(currentUser.id, user);
+      await getUserById(user.id);
+    }
   };
+
+  const handleUnfollow = async () => {
+    if (user) {
+      await unfollowUser(currentUser.id, user);
+      await getUserById(user.id);
+    }
+  };
+
+  if (
+    user &&
+    !user.isPublic &&
+    currentUser.id !== user.id &&
+    !currentUser.followers.find((element) => {
+      element.id === user.id;
+    })
+  ) {
+    return (
+      <main>
+        <div className={styles.div}>
+          <p>This profile is private.</p>
+          {!isCurrentUser && (
+            <button
+              className={styles.button}
+              onClick={
+                currentUser.followings.some(
+                  (element) => element.id === user?.id
+                )
+                  ? handleUnfollow
+                  : handleFollow
+              }
+            >
+              {currentUser.followings.some((element) => element.id === user?.id)
+                ? 'Unfollow'
+                : 'Follow'}
+            </button>
+          )}
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main>
@@ -23,31 +68,63 @@ const UserDetail = ({ user }: Props) => {
         <p>Email: {user ? user.email : currentUser.email}</p>
 
         <div>
-          <h3>Followers:</h3>
-          <ul>
-            {user?.followingRelations.followers.map((follower) => (
-              <li key={follower.id}>
-                <Link to={`/user/${follower.id}`}>{follower.userName}</Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h3>Following:</h3>
-          <ul>
-            {user?.followingRelations.followings.map((followingUser) => (
-              <li key={followingUser.id}>
-                <Link to={`/user/${followingUser.id}`}>
-                  {followingUser.userName}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div>
+            <h3>Followers:</h3>
+            {user?.followers && user.followers.length > 0 ? (
+              <ul>
+                {user.followers.map((follower) => (
+                  <li key={`follower${follower.id}`}>
+                    <Link
+                      onClick={() => getUserById(follower.id)}
+                      to={`/user/${follower.id}`}
+                    >
+                      {follower.userName}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No followers yet.</p>
+            )}
+          </div>
+
+          <div>
+            <h3>Following:</h3>
+            {user?.followings && user.followings.length > 0 ? (
+              <ul>
+                {user.followings.map((followingUser) => (
+                  <li key={`followingUser${followingUser.id}`}>
+                    <Link
+                      onClick={() => getUserById(followingUser.id)}
+                      to={`/user/${followingUser.id}`}
+                    >
+                      {followingUser.userName}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>Not following anyone yet.</p>
+            )}
+          </div>
         </div>
 
         {isCurrentUser && <Link to="/update-account">Update Profile</Link>}
 
-        {!isCurrentUser && <button onClick={handleFollow}>Follow</button>}
+        {!isCurrentUser && (
+          <button
+            className={styles.button}
+            onClick={
+              currentUser.followings.some((element) => element.id === user?.id)
+                ? handleUnfollow
+                : handleFollow
+            }
+          >
+            {currentUser.followings.some((element) => element.id === user?.id)
+              ? 'Unfollow'
+              : 'Follow'}
+          </button>
+        )}
       </div>
     </main>
   );

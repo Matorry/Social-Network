@@ -5,7 +5,8 @@ import styles from './searchForm.module.scss';
 
 const SearchForm: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const { searchUser, isLoading, error, search } = useUsers();
+  const { searchUserByName, isLoading, error, search, getUserById } =
+    useUsers();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -13,7 +14,7 @@ const SearchForm: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    searchUser(searchTerm);
+    searchUserByName(searchTerm);
   };
 
   return (
@@ -36,7 +37,12 @@ const SearchForm: React.FC = () => {
         {search && (
           <span>
             User found:
-            <Link to={`/user/${search?.id}`}>{search?.userName}</Link>
+            <Link
+              onClick={() => getUserById(search?.id)}
+              to={`/user/:${search?.id}`}
+            >
+              {search?.userName}
+            </Link>
           </span>
         )}
       </form>

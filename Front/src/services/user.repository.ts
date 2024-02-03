@@ -89,4 +89,54 @@ export class ApiUsersRepository implements Repository<User> {
     const data = await response.json();
     return data;
   }
+
+  async follow(user: User, id: string, token: string): Promise<User> {
+    console.log(id);
+    const response = await fetch(`${this.urlBase}/follow/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(user.id),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok)
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+
+    const data = await response.json();
+    return data;
+  }
+
+  async unfollow(user: User, id: string, token: string): Promise<User> {
+    const response = await fetch(`${this.urlBase}/unfollow/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(user.id),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok)
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+
+    const data = await response.json();
+    return data;
+  }
+
+  async getById(id: string, token: string): Promise<User> {
+    const response = await fetch(`${this.urlBase}/${id}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok)
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+
+    const data = await response.json();
+    return data;
+  }
 }

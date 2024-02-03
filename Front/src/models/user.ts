@@ -4,18 +4,14 @@ export type UserNoId = {
   userName: string;
   name: string;
   surname: string;
-  followingRelations: FollowRelation;
-  likes: [];
+  followers: User[];
+  followings: User[];
+  likes: User[];
   posts: [];
   comments: [];
   isPublic: boolean;
   email: string;
   passwd: string;
-};
-
-export type FollowRelation = {
-  followers: User[];
-  followings: User[];
 };
 
 export type LoginData = {
