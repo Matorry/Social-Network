@@ -44,27 +44,6 @@ const userSchema = new Schema<User>({
     type: Boolean,
     required: true,
   },
-  likes: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Post",
-      required: true,
-    },
-  ],
-  posts: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Post",
-      required: true,
-    },
-  ],
-  comments: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Comment",
-      required: true,
-    },
-  ],
 });
 
 userSchema.set("toJSON", {

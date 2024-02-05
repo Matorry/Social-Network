@@ -35,5 +35,17 @@ export class PostRouter {
         ],
       },
     });
+
+    server.route({
+      method: "DELETE",
+      path: "/post/delete/{id}",
+      handler: this.controller.delete.bind(this.controller),
+      options: {
+        pre: [
+          { method: this.authInterceptor.authorization },
+          { method: this.authInterceptor.authentication },
+        ],
+      },
+    });
   }
 }

@@ -1,5 +1,3 @@
-import { Post } from "./post";
-
 export type WithId = {
   id: string;
 };
@@ -12,10 +10,7 @@ export type LoginData = {
 export type UserNoId = LoginData & {
   name: string;
   surname: string;
-  likes: Post[];
-  posts: Post[];
   isPublic: boolean;
-  comments: Comment[];
   email: string;
   followers: User[];
   followings: User[];
