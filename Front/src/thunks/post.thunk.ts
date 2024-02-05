@@ -10,3 +10,12 @@ export const createThunk = createAsyncThunk<
 
   return newPost;
 });
+
+export const getUserPostsThunk = createAsyncThunk<
+  Post[],
+  { repository: ApiPostRepository; token: string; id: string }
+>('post/get', async ({ repository, id, token }) => {
+  const newPost = await repository.getUserPosts(id, token);
+
+  return newPost;
+});

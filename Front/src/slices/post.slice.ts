@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Post } from '../models/post';
-import { createThunk } from '../thunks/post.thunk';
-import { registerThunk } from '../thunks/user.thunk';
+import { createThunk, getUserPostsThunk } from '../thunks/post.thunk';
 
 export type PostState = {
   followingPosts: Post[];
@@ -22,21 +21,36 @@ const postSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(registerThunk.pending, (state) => {
+    builder.addCase(createThunk.pending, (state) => {
+      state.error = undefined;
+      state.loadState = 'loading';
+    });
+
+    builder.addCase(createThunk.fulfilled, (state) => {
+      state.error = undefined;
+      state.loadState = 'loaded';
+    });
+
+    builder.addCase(createThunk.rejected, (state, action) => {
+      state.loadState = 'error';
+      state.error = action.error.message;
+    });
+
+    builder.addCase(getUserPostsThunk.pending, (state) => {
       state.error = undefined;
       state.loadState = 'loading';
     });
 
     builder.addCase(
-      createThunk.fulfilled,
-      (state, { payload }: { payload: Post }) => {
+      getUserPostsThunk.fulfilled,
+      (state, { payload }: { payload: Post[] }) => {
         state.error = undefined;
-        state.currentUserPosts = [...state.currentUserPosts, payload];
+        state.currentUserPosts = payload;
         state.loadState = 'loaded';
       }
     );
 
-    builder.addCase(createThunk.rejected, (state, action) => {
+    builder.addCase(getUserPostsThunk.rejected, (state, action) => {
       state.loadState = 'error';
       state.error = action.error.message;
     });
