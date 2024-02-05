@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Post } from '../models/post';
-import { createThunk, getUserPostsThunk } from '../thunks/post.thunk';
+import {
+  createThunk,
+  deleteThunk,
+  getUserPostsThunk,
+} from '../thunks/post.thunk';
 
 export type PostState = {
   followingPosts: Post[];
@@ -51,6 +55,27 @@ const postSlice = createSlice({
     );
 
     builder.addCase(getUserPostsThunk.rejected, (state, action) => {
+      state.loadState = 'error';
+      state.error = action.error.message;
+    });
+
+    builder.addCase(deleteThunk.pending, (state) => {
+      state.error = undefined;
+      state.loadState = 'loading';
+    });
+
+    builder.addCase(
+      deleteThunk.fulfilled,
+      (state, { payload }: { payload: string }) => {
+        state.error = undefined;
+        state.currentUserPosts = state.currentUserPosts.filter(
+          (element) => element.id !== payload
+        );
+        state.loadState = 'loaded';
+      }
+    );
+
+    builder.addCase(deleteThunk.rejected, (state, action) => {
       state.loadState = 'error';
       state.error = action.error.message;
     });

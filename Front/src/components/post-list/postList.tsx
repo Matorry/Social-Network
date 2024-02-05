@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { usePosts } from '../../hooks/use.post';
 import { useUsers } from '../../hooks/use.user';
 import PostItem from '../post-item/postItem';
@@ -6,7 +7,7 @@ import styles from './postList.module.scss';
 
 const PostList: React.FC = () => {
   const { currentUser } = useUsers();
-  const { loadUserPosts, currentUserPosts } = usePosts();
+  const { loadUserPosts, currentUserPosts, deletePost } = usePosts();
 
   const id = currentUser.id;
 
@@ -14,16 +15,37 @@ const PostList: React.FC = () => {
     loadUserPosts(id);
   }, [loadUserPosts, id]);
 
-  const posts = currentUserPosts;
+  const handleDelete = (postId: string) => {
+    deletePost(postId);
+  };
+
+  const handleEdit = (postId: string) => {
+    console.log(postId);
+  };
 
   return (
     <div className={styles.postListContainer}>
       <h2 className={styles.postListTitle}>My posts:</h2>
 
-      {posts.length > 0 ? (
+      {currentUserPosts.length > 0 ? (
         <ul className={styles.postList}>
-          {posts.map((post) => (
-            <PostItem key={post.id} post={post} />
+          {currentUserPosts.map((post) => (
+            <div key={post.id}>
+              <PostItem post={post} />
+              <Link
+                to={`/edit-post/${post.id}`}
+                onClick={() => handleEdit(post.id)}
+                className={styles.button}
+              >
+                Edit
+              </Link>
+              <button
+                onClick={() => handleDelete(post.id)}
+                className={styles.button}
+              >
+                Delete
+              </button>
+            </div>
           ))}
         </ul>
       ) : (

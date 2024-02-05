@@ -40,4 +40,19 @@ export class ApiPostRepository implements Repository<Post> {
     const data = await response.json();
     return data;
   }
+
+  async delete(id: string, token: string): Promise<string> {
+    const response = await fetch(`${this.urlBase}/post/delete/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok)
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+
+    return id;
+  }
 }

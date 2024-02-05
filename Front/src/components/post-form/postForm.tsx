@@ -14,8 +14,6 @@ const PostForm: React.FC = () => {
     title: '',
     text: '',
     date: new Date(),
-    likes: [],
-    comments: [],
   });
 
   const handleChange = (
@@ -39,8 +37,6 @@ const PostForm: React.FC = () => {
       title: '',
       text: '',
       date: new Date(),
-      likes: [],
-      comments: [],
     });
   };
 

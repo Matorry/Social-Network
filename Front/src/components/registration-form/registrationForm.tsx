@@ -28,9 +28,6 @@ const RegistrationForm = ({ mode, currentUser }: Props) => {
     passwd: '',
     followers: [],
     followings: [],
-    comments: [],
-    likes: [],
-    posts: [],
   });
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

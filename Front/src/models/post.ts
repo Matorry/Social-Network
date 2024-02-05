@@ -7,8 +7,6 @@ export type PostNoId = {
   title: string;
   text: string;
   date: Date;
-  likes: User[];
-  comments: [];
 };
 
 export type Post = WithId & PostNoId;

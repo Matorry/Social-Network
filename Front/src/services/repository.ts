@@ -7,6 +7,6 @@ export interface Repository<X extends { id: string | number }> {
   register?(newData: Omit<X, 'id'>): Promise<X>;
   create?(newData: Omit<X, 'id'>, token: string): Promise<X>;
   update?(newData: Partial<X>, id: string, token: string): Promise<X>;
-  delete?(id: string, token: string): Promise<void>;
+  delete?(id: string, token: string): Promise<string>;
   login?(data: LoginData): Promise<Logged>;
 }

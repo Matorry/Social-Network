@@ -49,6 +49,8 @@ export function AppRoutes() {
 
         <Route path="/new-posts" element={<PostForm />}></Route>
 
+        <Route path="/edit-post/:id" element={<PostForm />}></Route>
+
         <Route path="/login" element={<LoginForm />}></Route>
 
         <Route

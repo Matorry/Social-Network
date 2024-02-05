@@ -19,3 +19,12 @@ export const getUserPostsThunk = createAsyncThunk<
 
   return newPost;
 });
+
+export const deleteThunk = createAsyncThunk<
+  string,
+  { repository: ApiPostRepository; id: string; token: string }
+>('post/delete', async ({ repository, id, token }) => {
+  const newPost = await repository.delete(id, token);
+
+  return newPost;
+});
