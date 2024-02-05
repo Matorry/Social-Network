@@ -23,5 +23,17 @@ export class PostRouter {
         ],
       },
     });
+
+    server.route({
+      method: "GET",
+      path: "/post/get/{id}",
+      handler: this.controller.getUserPost.bind(this.controller),
+      options: {
+        pre: [
+          { method: this.authInterceptor.authorization },
+          { method: this.authInterceptor.authentication },
+        ],
+      },
+    });
   }
 }

@@ -24,4 +24,19 @@ export class PostController extends Controller<Post> {
       return response.response({ error: "Internal Server Error" }).code(500);
     }
   }
+
+  async getUserPost(request: Request, response: ResponseToolkit) {
+    try {
+      const { id } = request.params;
+      const author = await this.userRepo.get(id);
+      console.log(author);
+      const posts = await this.postRepo.search({
+        key: "author",
+        value: author,
+      });
+      return response.response(posts).code(200);
+    } catch (error) {
+      return response.response({ error: "Internal Server Error" }).code(500);
+    }
+  }
 }

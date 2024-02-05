@@ -13,7 +13,6 @@ export class PostMongoRepository implements Repository<Post> {
     const data = await PostModel.findById(id)
       .populate("author")
       .populate("likes")
-      .populate("comments")
       .exec();
     if (!data)
       throw new HttpError(404, "Not Found", "User not found in file system", {
@@ -33,7 +32,6 @@ export class PostMongoRepository implements Repository<Post> {
     })
       .populate("author")
       .populate("likes")
-      .populate("comments")
       .exec();
     if (!data)
       throw new HttpError(404, "Not Found", "User not found in file system", {
@@ -61,7 +59,6 @@ export class PostMongoRepository implements Repository<Post> {
     const data = await PostModel.find({ [key]: value })
       .populate("author")
       .populate("likes")
-      .populate("comments")
       .exec();
     return data;
   }
