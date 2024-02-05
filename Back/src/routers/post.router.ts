@@ -47,5 +47,17 @@ export class PostRouter {
         ],
       },
     });
+
+    server.route({
+      method: "PATCH",
+      path: "/post/patch/{id}",
+      handler: this.controller.patch.bind(this.controller),
+      options: {
+        pre: [
+          { method: this.authInterceptor.authorization },
+          { method: this.authInterceptor.authentication },
+        ],
+      },
+    });
   }
 }

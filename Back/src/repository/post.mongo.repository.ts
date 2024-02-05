@@ -30,7 +30,7 @@ export class PostMongoRepository implements Repository<Post> {
     const data = await PostModel.findByIdAndUpdate(id, newData, {
       new: true,
     })
-
+      .populate("author")
       .exec();
     if (!data)
       throw new HttpError(404, "Not Found", "User not found in file system", {
