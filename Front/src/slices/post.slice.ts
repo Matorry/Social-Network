@@ -4,6 +4,7 @@ import {
   createThunk,
   deleteThunk,
   getUserPostsThunk,
+  updateThunk,
 } from '../thunks/post.thunk';
 
 export type PostState = {
@@ -76,6 +77,28 @@ const postSlice = createSlice({
     );
 
     builder.addCase(deleteThunk.rejected, (state, action) => {
+      state.loadState = 'error';
+      state.error = action.error.message;
+    });
+
+    builder.addCase(updateThunk.pending, (state) => {
+      state.error = undefined;
+      state.loadState = 'loading';
+    });
+
+    builder.addCase(
+      updateThunk.fulfilled,
+      (state, { payload }: { payload: Post }) => {
+        state.error = undefined;
+        const index = state.currentUserPosts.findIndex(
+          (element) => element.id === payload.id
+        );
+        state.currentUserPosts[index] = payload;
+        state.loadState = 'loaded';
+      }
+    );
+
+    builder.addCase(updateThunk.rejected, (state, action) => {
       state.loadState = 'error';
       state.error = action.error.message;
     });

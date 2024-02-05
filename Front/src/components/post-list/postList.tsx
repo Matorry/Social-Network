@@ -19,10 +19,6 @@ const PostList: React.FC = () => {
     deletePost(postId);
   };
 
-  const handleEdit = (postId: string) => {
-    console.log(postId);
-  };
-
   return (
     <div className={styles.postListContainer}>
       <h2 className={styles.postListTitle}>My posts:</h2>
@@ -32,11 +28,7 @@ const PostList: React.FC = () => {
           {currentUserPosts.map((post) => (
             <div key={post.id}>
               <PostItem post={post} />
-              <Link
-                to={`/edit-post/${post.id}`}
-                onClick={() => handleEdit(post.id)}
-                className={styles.button}
-              >
+              <Link to={`/edit-post/${post.id}`} className={styles.button}>
                 Edit
               </Link>
               <button

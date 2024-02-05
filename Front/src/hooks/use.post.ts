@@ -1,12 +1,13 @@
 import { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { PostNoId } from '../models/post';
+import { Post, PostNoId } from '../models/post';
 import { ApiPostRepository } from '../services/post.repository';
 import { AppDispatch, RootState } from '../store/store';
 import {
   createThunk,
   deleteThunk,
   getUserPostsThunk,
+  updateThunk,
 } from '../thunks/post.thunk';
 
 export const urlBaseUsers = 'http://localhost:3000';
@@ -34,8 +35,13 @@ export function usePosts() {
     postsDispatch(deleteThunk({ repository, id, token }));
   };
 
+  const updatePost = async (id: string, data: Partial<Post>) => {
+    postsDispatch(updateThunk({ repository, data, id, token }));
+  };
+
   return {
     createPost,
+    updatePost,
     deletePost,
     loadUserPosts,
     currentUserPosts: postState.currentUserPosts,

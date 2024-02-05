@@ -28,3 +28,17 @@ export const deleteThunk = createAsyncThunk<
 
   return newPost;
 });
+
+export const updateThunk = createAsyncThunk<
+  Post,
+  {
+    repository: ApiPostRepository;
+    data: Partial<Post>;
+    id: string;
+    token: string;
+  }
+>('post/update', async ({ repository, data, id, token }) => {
+  const newPost = await repository.update(data, id, token);
+
+  return newPost;
+});

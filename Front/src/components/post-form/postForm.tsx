@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { usePosts } from '../../hooks/use.post';
 import { useUsers } from '../../hooks/use.user';
 import { PostNoId } from '../../models/post';
@@ -6,7 +8,8 @@ import styles from './postForm.module.scss';
 
 const PostForm: React.FC = () => {
   const { currentUser } = useUsers();
-  const { createPost } = usePosts();
+  const { createPost, updatePost, currentUserPosts } = usePosts();
+  const { id } = useParams<{ id?: string }>();
 
   const [postFormData, setPostFormData] = useState<PostNoId>({
     id: '',
@@ -15,6 +18,21 @@ const PostForm: React.FC = () => {
     text: '',
     date: new Date(),
   });
+
+  useEffect(() => {
+    if (id) {
+      const post = currentUserPosts.find((element) => element.id === id);
+      if (post) {
+        setPostFormData({
+          id: post.id,
+          author: post.author,
+          title: post.title,
+          text: post.text,
+          date: post.date,
+        });
+      }
+    }
+  }, [id, currentUserPosts]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -29,7 +47,12 @@ const PostForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    await createPost(postFormData);
+    if (id) {
+      const { author, ...postDataWithoutAuthor } = postFormData;
+      await updatePost(postFormData.id, postDataWithoutAuthor);
+    } else {
+      await createPost(postFormData);
+    }
 
     setPostFormData({
       id: '',
@@ -65,7 +88,7 @@ const PostForm: React.FC = () => {
         />
 
         <button type="submit" className={styles.button}>
-          Create Post
+          {id ? 'Update Post' : 'Create Post'}
         </button>
       </form>
     </main>

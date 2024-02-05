@@ -55,4 +55,25 @@ export class ApiPostRepository implements Repository<Post> {
 
     return id;
   }
+
+  async update(
+    newData: Partial<Post>,
+    id: string,
+    token: string
+  ): Promise<Post> {
+    const response = await fetch(`${this.urlBase}/post/patch/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(newData),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok)
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+
+    const data = await response.json();
+    return data;
+  }
 }

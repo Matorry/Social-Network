@@ -62,7 +62,7 @@ export class ApiUsersRepository implements Repository<User> {
     return data;
   }
 
-  async delete(id: string, token: string): Promise<void> {
+  async delete(id: string, token: string): Promise<string> {
     const response = await fetch(`${this.urlBase}/user/delete/${id}`, {
       method: 'DELETE',
       headers: {
@@ -73,6 +73,7 @@ export class ApiUsersRepository implements Repository<User> {
 
     if (!response.ok)
       throw new Error(`Error ${response.status}: ${response.statusText}`);
+    return id;
   }
 
   async getByUsername(userName: string, token: string): Promise<User> {
