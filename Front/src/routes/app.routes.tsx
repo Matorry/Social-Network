@@ -9,7 +9,11 @@ const RegistrationForm = lazy(
 );
 const HomePage = lazy(() => import('../pages/home.page/home.page'));
 const UserDetail = lazy(() => import('../components/userDetail/userDetail'));
+const PostDetail = lazy(() => import('../components/post.detail/postDetail'));
 const PostList = lazy(() => import('../components/post-list/postList'));
+const CommentForm = lazy(
+  () => import('../components/comment-form/commentForm')
+);
 
 export function AppRoutes() {
   const { status, currentUser, userDetail } = useUsers();
@@ -36,6 +40,10 @@ export function AppRoutes() {
             )
           }
         />
+
+        <Route path="/comment-form/:postId" element={<CommentForm />}></Route>
+
+        <Route path="/post/:postId" element={<PostDetail />}></Route>
 
         <Route
           path="/user/:userId"

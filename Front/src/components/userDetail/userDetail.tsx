@@ -7,7 +7,8 @@ type Props = {
   user?: User;
 };
 
-const UserDetail = ({ user }: Props) => {
+const UserDetail: React.FC<Props> = (props) => {
+  const { user } = props;
   const { currentUser, followUser, getUserById, unfollowUser } = useUsers();
 
   const isCurrentUser = currentUser && currentUser.id === user?.id;

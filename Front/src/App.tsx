@@ -1,4 +1,4 @@
-import { Header } from './components/header/header';
+import Header from './components/header/header';
 import { AppRoutes } from './routes/app.routes';
 
 function App() {

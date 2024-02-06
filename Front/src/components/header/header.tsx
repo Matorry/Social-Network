@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { AiOutlineMenuFold, AiOutlineMenuUnfold } from 'react-icons/ai';
 import { FaUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useUsers } from '../../hooks/use.user';
 import style from './header.module.scss';
 
-export function Header() {
+const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { token, logout } = useUsers();
 
@@ -62,4 +62,6 @@ export function Header() {
       )}
     </>
   );
-}
+};
+
+export default Header;

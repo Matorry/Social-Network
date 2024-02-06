@@ -1,5 +1,6 @@
-import { Post } from "./post";
-import { User, WithId } from "./user";
+import { WithId } from '../types/withId';
+import { Post } from './post';
+import { User } from './user';
 
 export type CommentNoId = {
   author: User;

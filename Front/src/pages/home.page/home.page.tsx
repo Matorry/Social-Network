@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import PostItem from '../../components/post-item/postItem';
 import SearchForm from '../../components/searchForm/searchForm';
 import { usePosts } from '../../hooks/use.post';
 import { useUsers } from '../../hooks/use.user';
 import styles from './home.page.module.scss';
 
-function HomePage() {
+const HomePage: React.FC = () => {
   const { currentUser } = useUsers();
   const { loadUserFollowingPosts, currentUserFollowingPosts } = usePosts();
 
@@ -18,13 +19,14 @@ function HomePage() {
   return (
     <div className={styles.postListContainer}>
       <SearchForm></SearchForm>
-      <h2 className={styles.postListTitle}>My posts:</h2>
+      <h2 className={styles.postListTitle}>My followings posts:</h2>
 
       {currentUserFollowingPosts.length > 0 ? (
         <ul className={styles.postList}>
           {currentUserFollowingPosts.map((post) => (
             <li key={post.id}>
               <PostItem post={post} isHome={true} />
+              <Link to={`/comment-form/${post.id}`}>Add comment</Link>
             </li>
           ))}
         </ul>
@@ -33,5 +35,5 @@ function HomePage() {
       )}
     </div>
   );
-}
+};
 export default HomePage;
