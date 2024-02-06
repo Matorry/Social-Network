@@ -46,7 +46,7 @@ export class ApiUsersRepository implements Repository<User> {
     id: string,
     token: string
   ): Promise<User> {
-    const response = await fetch(`${this.urlBase}/patch/${id}`, {
+    const response = await fetch(`${this.urlBase}/user/patch/${id}`, {
       method: 'PATCH',
       body: JSON.stringify(newData),
       headers: {
@@ -62,8 +62,8 @@ export class ApiUsersRepository implements Repository<User> {
     return data;
   }
 
-  async delete(id: string, token: string): Promise<void> {
-    const response = await fetch(`${this.urlBase}/delete/${id}`, {
+  async delete(id: string, token: string): Promise<string> {
+    const response = await fetch(`${this.urlBase}/user/delete/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -73,10 +73,11 @@ export class ApiUsersRepository implements Repository<User> {
 
     if (!response.ok)
       throw new Error(`Error ${response.status}: ${response.statusText}`);
+    return id;
   }
 
   async getByUsername(userName: string, token: string): Promise<User> {
-    const response = await fetch(`${this.urlBase}/search/${userName}`, {
+    const response = await fetch(`${this.urlBase}/user/search/${userName}`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -91,8 +92,7 @@ export class ApiUsersRepository implements Repository<User> {
   }
 
   async follow(user: User, id: string, token: string): Promise<User> {
-    console.log(id);
-    const response = await fetch(`${this.urlBase}/follow/${id}`, {
+    const response = await fetch(`${this.urlBase}/user/follow/${id}`, {
       method: 'PATCH',
       body: JSON.stringify(user.id),
       headers: {
@@ -109,7 +109,7 @@ export class ApiUsersRepository implements Repository<User> {
   }
 
   async unfollow(user: User, id: string, token: string): Promise<User> {
-    const response = await fetch(`${this.urlBase}/unfollow/${id}`, {
+    const response = await fetch(`${this.urlBase}/user/unfollow/${id}`, {
       method: 'PATCH',
       body: JSON.stringify(user.id),
       headers: {
@@ -126,7 +126,7 @@ export class ApiUsersRepository implements Repository<User> {
   }
 
   async getById(id: string, token: string): Promise<User> {
-    const response = await fetch(`${this.urlBase}/${id}`, {
+    const response = await fetch(`${this.urlBase}/user/${id}`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,

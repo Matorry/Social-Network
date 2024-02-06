@@ -1,4 +1,5 @@
-import { User, WithId } from "./user";
+import { WithId } from '../types/withId';
+import { User } from './user';
 
 export type PostNoId = {
   id: string;
@@ -6,7 +7,6 @@ export type PostNoId = {
   title: string;
   text: string;
   date: Date;
-  likes: User[];
 };
 
 export type Post = WithId & PostNoId;

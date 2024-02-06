@@ -6,9 +6,7 @@ export type UserNoId = {
   surname: string;
   followers: User[];
   followings: User[];
-  likes: User[];
-  posts: [];
-  comments: [];
+
   isPublic: boolean;
   email: string;
   passwd: string;

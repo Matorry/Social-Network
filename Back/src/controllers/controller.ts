@@ -40,8 +40,8 @@ export abstract class Controller<T extends { id: string | number }> {
   async patch(request: Request, response: ResponseToolkit) {
     try {
       const { id } = request.params;
-      const user = await this.repo.patch(id, request.payload as Partial<T>);
-      return response.response(user).code(200);
+      const data = await this.repo.patch(id, request.payload as Partial<T>);
+      return response.response(data).code(200);
     } catch (error) {
       return response.response({ error: "Internal Server Error" }).code(500);
     }

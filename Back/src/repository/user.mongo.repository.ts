@@ -30,8 +30,7 @@ export class UserMongoRepository implements Repository<User> {
     const data = await UserModel.findByIdAndUpdate(id, newData, {
       new: true,
     })
-      .populate("followers")
-      .populate("followings")
+
       .exec();
     if (!data)
       throw new HttpError(404, "Not Found", "User not found in file system", {

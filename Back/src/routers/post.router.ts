@@ -1,33 +1,21 @@
 import { Server } from "@hapi/hapi";
-import { UsersController } from "../controllers/user.controller.js";
+import { PostController } from "../controllers/post.controller.js";
 import { AuthInterceptor } from "../middleware/auth.interceptor.js";
 
-export class UsersRouter {
-  private controller: UsersController;
+export class PostRouter {
+  private controller: PostController;
   private authInterceptor: AuthInterceptor;
 
-  constructor(controller: UsersController) {
+  constructor(controller: PostController) {
     this.controller = controller;
     this.authInterceptor = new AuthInterceptor();
   }
 
   async configureRoutes(server: Server) {
     server.route({
-      method: "PATCH",
-      path: "/login",
-      handler: this.controller.login.bind(this.controller),
-    });
-
-    server.route({
       method: "POST",
-      path: "/register",
-      handler: this.controller.register.bind(this.controller),
-    });
-
-    server.route({
-      method: "GET",
-      path: "/user/search/{userName}",
-      handler: this.controller.getByUserName.bind(this.controller),
+      path: "/post/create",
+      handler: this.controller.createPost.bind(this.controller),
       options: {
         pre: [
           { method: this.authInterceptor.authorization },
@@ -38,20 +26,8 @@ export class UsersRouter {
 
     server.route({
       method: "GET",
-      path: "/user/",
-      handler: this.controller.getAll.bind(this.controller),
-      options: {
-        pre: [
-          { method: this.authInterceptor.authorization },
-          { method: this.authInterceptor.authentication },
-        ],
-      },
-    });
-
-    server.route({
-      method: "GET",
-      path: "/user/{id}",
-      handler: this.controller.get.bind(this.controller),
+      path: "/post/get/{id}",
+      handler: this.controller.getUserPost.bind(this.controller),
       options: {
         pre: [
           { method: this.authInterceptor.authorization },
@@ -62,7 +38,7 @@ export class UsersRouter {
 
     server.route({
       method: "DELETE",
-      path: "/user/delete/{id}",
+      path: "/post/delete/{id}",
       handler: this.controller.delete.bind(this.controller),
       options: {
         pre: [
@@ -74,7 +50,7 @@ export class UsersRouter {
 
     server.route({
       method: "PATCH",
-      path: "/user/patch/{id}",
+      path: "/post/patch/{id}",
       handler: this.controller.patch.bind(this.controller),
       options: {
         pre: [
@@ -85,21 +61,9 @@ export class UsersRouter {
     });
 
     server.route({
-      method: "PATCH",
-      path: "/user/follow/{id}",
-      handler: this.controller.follow.bind(this.controller),
-      options: {
-        pre: [
-          { method: this.authInterceptor.authorization },
-          { method: this.authInterceptor.authentication },
-        ],
-      },
-    });
-
-    server.route({
-      method: "PATCH",
-      path: "/user/unfollow/{id}",
-      handler: this.controller.unfollow.bind(this.controller),
+      method: "GET",
+      path: "/post/search-post/{id}",
+      handler: this.controller.getByUserAuthorFollowing.bind(this.controller),
       options: {
         pre: [
           { method: this.authInterceptor.authorization },

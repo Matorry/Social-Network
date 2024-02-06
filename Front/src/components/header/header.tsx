@@ -22,6 +22,11 @@ export function Header() {
                 </Link>
               </li>
               <li>
+                <Link to={'/new-posts'} onClick={() => setIsMenuOpen(false)}>
+                  New Post
+                </Link>
+              </li>
+              <li>
                 <Link to={'/my-posts'} onClick={() => setIsMenuOpen(false)}>
                   My Posts
                 </Link>

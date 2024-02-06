@@ -23,14 +23,11 @@ const RegistrationForm = ({ mode, currentUser }: Props) => {
     userName: '',
     name: '',
     surname: '',
-    followers: [],
-    followings: [],
     isPublic: false,
     email: '',
     passwd: '',
-    comments: [],
-    likes: [],
-    posts: [],
+    followers: [],
+    followings: [],
   });
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -2,14 +2,13 @@ $primary: white;
 $secondary: #667eea;
 
 .header {
-  position: sticky;
-  top: 0;
   display: flex;
   transition: all 0.5s ease;
   z-index: 1;
   background-color: $secondary;
   padding-inline: 2rem;
   justify-content: space-between;
+  height: 7vh;
 
   nav {
     display: flex;
@@ -63,7 +62,7 @@ $secondary: #667eea;
           transition: all 0.4s ease-in-out;
         }
 
-        @media (width < 700px) {
+        @media (width < 842px) {
           background-color: transparent;
           padding: 0 1em;
           justify-content: flex-start;
@@ -81,7 +80,7 @@ $secondary: #667eea;
     }
   }
 
-  @media (width < 700px) {
+  @media (width < 842px) {
     .hidden {
       display: none;
     }
