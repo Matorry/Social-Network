@@ -7,6 +7,7 @@ import {
   createThunk,
   deleteThunk,
   getByAuthorThunk,
+  getByIdThunk,
   getUserPostsThunk,
   updateThunk,
 } from '../thunks/post.thunk';
@@ -47,12 +48,21 @@ export function usePosts() {
     [repository, postsDispatch, token]
   );
 
+  const getPostById = useCallback(
+    async (id: string) => {
+      postsDispatch(getByIdThunk({ repository, id, token }));
+    },
+    [repository, postsDispatch, token]
+  );
+
   return {
+    getPostById,
     loadUserFollowingPosts,
     createPost,
     updatePost,
     deletePost,
     loadUserPosts,
+    currentPost: postState.currentPost,
     currentUserPosts: postState.currentUserPosts,
     currentUserFollowingPosts: postState.followingPosts,
   };

@@ -21,22 +21,24 @@ const PostList: React.FC = () => {
 
   return (
     <div className={styles.postListContainer}>
-      <h2 className={styles.postListTitle}>My posts:</h2>
+      <h2>My posts:</h2>
 
       {currentUserPosts.length > 0 ? (
-        <ul className={styles.postList}>
+        <ul>
           {currentUserPosts.map((post) => (
             <div key={post.id}>
               <PostItem post={post} isHome={false} />
-              <Link to={`/edit-post/${post.id}`} className={styles.button}>
-                Edit
-              </Link>
-              <button
-                onClick={() => handleDelete(post.id)}
-                className={styles.button}
-              >
-                Delete
-              </button>
+              <div>
+                <Link to={`/edit-post/${post.id}`} className={styles.button}>
+                  Edit
+                </Link>
+                <button
+                  onClick={() => handleDelete(post.id)}
+                  className={styles.button}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           ))}
         </ul>

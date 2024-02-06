@@ -69,48 +69,48 @@ const UserDetail: React.FC<Props> = (props) => {
         <p>Email: {user ? user.email : currentUser.email}</p>
 
         <div>
-          <div>
-            <h3>Followers:</h3>
-            {user?.followers && user.followers.length > 0 ? (
-              <ul>
-                {user.followers.map((follower) => (
-                  <li key={`follower${follower.id}`}>
-                    <Link
-                      onClick={() => getUserById(follower.id)}
-                      to={`/user/${follower.id}`}
-                    >
-                      {follower.userName}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>No followers yet.</p>
-            )}
-          </div>
+          <h3>Followers:</h3>
+          {user?.followers && user.followers.length > 0 ? (
+            <ul>
+              {user.followers.map((follower) => (
+                <li key={`follower${follower.id}`}>
+                  <Link
+                    onClick={() => getUserById(follower.id)}
+                    to={`/user/${follower.id}`}
+                  >
+                    {follower.userName}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No followers yet.</p>
+          )}
 
-          <div>
-            <h3>Following:</h3>
-            {user?.followings && user.followings.length > 0 ? (
-              <ul>
-                {user.followings.map((followingUser) => (
-                  <li key={`followingUser${followingUser.id}`}>
-                    <Link
-                      onClick={() => getUserById(followingUser.id)}
-                      to={`/user/${followingUser.id}`}
-                    >
-                      {followingUser.userName}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>Not following anyone yet.</p>
-            )}
-          </div>
+          <h3>Following:</h3>
+          {user?.followings && user.followings.length > 0 ? (
+            <ul>
+              {user.followings.map((followingUser) => (
+                <li key={`followingUser${followingUser.id}`}>
+                  <Link
+                    onClick={() => getUserById(followingUser.id)}
+                    to={`/user/${followingUser.id}`}
+                  >
+                    {followingUser.userName}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>Not following anyone yet.</p>
+          )}
         </div>
 
-        {isCurrentUser && <Link to="/update-account">Update Profile</Link>}
+        {isCurrentUser && (
+          <Link className={styles.button} to="/update-account">
+            Update Profile
+          </Link>
+        )}
 
         {!isCurrentUser && (
           <button

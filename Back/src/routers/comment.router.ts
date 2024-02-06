@@ -25,7 +25,7 @@ export class CommentRouter {
     });
 
     server.route({
-      method: "POST",
+      method: "GET",
       path: "/comment/search/{id}",
       handler: this.controller.searchCommentByPost.bind(this.controller),
       options: {

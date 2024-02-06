@@ -15,19 +15,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2rem;
-    div {
-      div {
-        display: flex;
-        align-items: center;
-        flex-direction: row;
-        justify-content: center;
-        gap: 2rem;
-      }
-    }
     li {
       width: 75vw;
-      max-width: 300px;
+      max-width: 320px;
       margin-top: 5px;
       margin-bottom: 5px;
       display: flex;
@@ -39,6 +29,7 @@
       border: 1px solid #e5f4f2;
       background-color: rgba(255, 255, 255, 0.8);
       box-shadow: 0px 0px 50px 50px #667eea39;
+      gap: 1rem;
     }
   }
   p {
@@ -48,19 +39,26 @@
     overflow-wrap: break-word;
     width: 80%;
   }
-}
 
-.button {
-  margin: 0.5rem;
-  background-color: #667eea;
-  width: 20vw;
-  max-width: 100px;
-  height: 40px;
-  border: none;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
-  color: inherit;
+  .button {
+    background-color: #667eea;
+    width: 10vw;
+    max-width: 400px;
+    height: 40px;
+    border: none;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .buttonContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
 }

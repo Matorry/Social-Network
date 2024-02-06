@@ -4,6 +4,7 @@ import {
   createThunk,
   deleteThunk,
   getByAuthorThunk,
+  getByIdThunk,
   getUserPostsThunk,
   updateThunk,
 } from '../thunks/post.thunk';
@@ -11,6 +12,7 @@ import {
 export type PostState = {
   followingPosts: Post[];
   currentUserPosts: Post[];
+  currentPost: Post;
   error: string | undefined;
   loadState: 'loading' | 'loaded' | 'idle' | 'error';
 };
@@ -18,6 +20,7 @@ export type PostState = {
 const initialState: PostState = {
   followingPosts: [],
   currentUserPosts: [],
+  currentPost: {} as Post,
   loadState: 'idle',
   error: undefined,
 };
@@ -91,11 +94,17 @@ const postSlice = createSlice({
       updateThunk.fulfilled,
       (state, { payload }: { payload: Post }) => {
         state.error = undefined;
-        const index = state.currentUserPosts.findIndex(
-          (element) => element.id === payload.id
-        );
-        state.currentUserPosts[index] = payload;
-        state.loadState = 'loaded';
+        if (state.currentUserPosts.includes(payload)) {
+          const index = state.currentUserPosts.findIndex(
+            (element) => element.id === payload.id
+          );
+          state.currentUserPosts[index] = payload;
+        } else {
+          const index = state.followingPosts.findIndex(
+            (element) => element.id === payload.id
+          );
+          state.followingPosts[index] = payload;
+        }
       }
     );
 
@@ -119,6 +128,25 @@ const postSlice = createSlice({
     );
 
     builder.addCase(getByAuthorThunk.rejected, (state, action) => {
+      state.loadState = 'error';
+      state.error = action.error.message;
+    });
+
+    builder.addCase(getByIdThunk.pending, (state) => {
+      state.error = undefined;
+      state.loadState = 'loading';
+    });
+
+    builder.addCase(
+      getByIdThunk.fulfilled,
+      (state, { payload }: { payload: Post }) => {
+        state.error = undefined;
+        state.currentPost = payload;
+        state.loadState = 'loaded';
+      }
+    );
+
+    builder.addCase(getByIdThunk.rejected, (state, action) => {
       state.loadState = 'error';
       state.error = action.error.message;
     });

@@ -33,7 +33,6 @@ export class CommentMongoRepository implements Repository<Comment> {
       throw new HttpError(404, "Not Found", "User not found in file system", {
         cause: "Trying update",
       });
-    console.log(data);
     return data;
   }
 
@@ -54,7 +53,6 @@ export class CommentMongoRepository implements Repository<Comment> {
   }): Promise<Comment[]> {
     const data = await CommentModel.find({ [key]: value })
       .populate("author")
-      .populate("likes")
       .exec();
     return data;
   }

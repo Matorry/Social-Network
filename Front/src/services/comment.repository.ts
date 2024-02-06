@@ -26,9 +26,10 @@ export class ApiCommentRepository implements Repository<Comment> {
   }
 
   async getByPost(id: string, token: string): Promise<Comment[]> {
-    const response = await fetch(`${this.urlBase}/post/search/${id}`, {
+    const response = await fetch(`${this.urlBase}/comment/search/${id}`, {
       method: 'GET',
       headers: {
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
     });

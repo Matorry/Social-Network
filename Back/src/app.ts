@@ -18,7 +18,10 @@ const server = new Hapi.Server({
   port: 3000,
   host: "localhost",
   routes: {
-    cors: {},
+    cors: {
+      origin: ["*"],
+      credentials: true,
+    },
   },
 });
 
@@ -40,6 +43,7 @@ const init = async () => {
   await usersRoutes.configureRoutes(server);
   await postRoutes.configureRoutes(server);
   await commentRoutes.configureRoutes(server);
+
   await server.start();
   console.log(`Server running on: ${server.info.uri}`);
 };
