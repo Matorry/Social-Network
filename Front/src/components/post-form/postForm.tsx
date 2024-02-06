@@ -17,6 +17,7 @@ const PostForm: React.FC = () => {
     title: '',
     text: '',
     date: new Date(),
+    likes: [],
   });
 
   useEffect(() => {
@@ -29,6 +30,7 @@ const PostForm: React.FC = () => {
           title: post.title,
           text: post.text,
           date: post.date,
+          likes: post.likes,
         });
       }
     }
@@ -60,13 +62,16 @@ const PostForm: React.FC = () => {
       title: '',
       text: '',
       date: new Date(),
+      likes: [],
     });
   };
 
   return (
     <main>
       <form onSubmit={handleSubmit} className={styles.form}>
-        <label htmlFor="title">Title:</label>
+        <label htmlFor="title">
+          <strong>Title:</strong>
+        </label>
         <input
           type="text"
           id="title"
@@ -77,7 +82,9 @@ const PostForm: React.FC = () => {
           required
         />
 
-        <label htmlFor="text">Text:</label>
+        <label htmlFor="text">
+          <strong>Text:</strong>
+        </label>
         <textarea
           id="text"
           name="text"

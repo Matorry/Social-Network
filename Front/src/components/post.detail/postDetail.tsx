@@ -2,31 +2,31 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useComment } from '../../hooks/use.comment';
 import { usePosts } from '../../hooks/use.post';
+import styles from './postDetail.module.scss';
 
 const PostDetailsPage: React.FC = () => {
   const { postId } = useParams();
-  const { currentUserFollowingPosts, currentUserPosts } = usePosts();
+  const { currentPost, getPostById } = usePosts();
   const { loadPostComments, currentPostComments } = useComment();
-  const posts = [...currentUserFollowingPosts, ...currentUserPosts];
-  const post = posts.find((element) => element.id === postId);
 
   useEffect(() => {
+    getPostById(postId!);
     loadPostComments(postId!);
-  }, [loadPostComments, postId]);
+  }, [loadPostComments, postId, getPostById]);
 
   return (
-    <div>
-      {post ? (
+    <div className={styles.div}>
+      {currentPost ? (
         <div>
-          <h2>{post.title}</h2>
-          <p>{post.author.name}</p>
-          <p>{post.text}</p>
+          <h2>{currentPost.title}</h2>
+          <p>{currentPost.text}</p>
           <h3>Comments</h3>
           <ul>
-            {currentPostComments.map((comment, index) => (
-              <li key={index}>
+            {currentPostComments.map((comment) => (
+              <li key={comment.id}>
                 <p>
-                  <strong>{comment.author.userName}</strong>: {comment.text}
+                  <strong>{comment.author.userName}</strong>: <br></br>
+                  {comment.text}
                 </p>
               </li>
             ))}

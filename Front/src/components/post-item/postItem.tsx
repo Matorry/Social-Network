@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Post } from '../../models/post';
 import styles from './postItem.module.scss';
 
@@ -9,11 +10,12 @@ type Props = {
 
 const PostItem: React.FC<Props> = ({ post, isHome }) => {
   return (
-    <div className={styles.div}>
+    <Link to={`/post/${post.id}`} className={styles.div}>
       <h3>Title: {post.title}</h3>
       <p>{post.text}</p>
+      <p>Likes: {post.likes.length}</p>
       {isHome && <p>Author: {post.author.name}</p>}
-    </div>
+    </Link>
   );
 };
 

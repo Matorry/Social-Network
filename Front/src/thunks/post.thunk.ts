@@ -55,3 +55,16 @@ export const getByAuthorThunk = createAsyncThunk<
 
   return posts;
 });
+
+export const getByIdThunk = createAsyncThunk<
+  Post,
+  {
+    repository: ApiPostRepository;
+    id: string;
+    token: string;
+  }
+>('post/get-by-id', async ({ repository, id, token }) => {
+  const posts = await repository.getById(id, token);
+
+  return posts;
+});

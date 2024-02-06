@@ -4,6 +4,7 @@ import { useComment } from '../../hooks/use.comment';
 import { usePosts } from '../../hooks/use.post';
 import { useUsers } from '../../hooks/use.user';
 import { CommentNoId } from '../../models/comment';
+import styles from './commentForm.module.scss';
 
 const CommentForm: React.FC = () => {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ const CommentForm: React.FC = () => {
   const { currentUser } = useUsers();
   const { createComment } = useComment();
   const { currentUserFollowingPosts } = usePosts();
+
   const currentPost = currentUserFollowingPosts.find(
     (element) => element.id === postId
   );
@@ -22,7 +24,7 @@ const CommentForm: React.FC = () => {
     date: new Date(),
   });
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = event.target;
     setCommentData((prevCommentData) => ({
       ...prevCommentData,
@@ -37,18 +39,21 @@ const CommentForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <label>
-        Comment:
-        <input
-          type="text"
-          name="text"
-          value={commentData.text}
-          onChange={handleInputChange}
-          required
-        />
+        <strong>Comment:</strong>
       </label>
-      <button type="submit">Submit</button>
+      <textarea
+        className={styles.text}
+        name="text"
+        value={commentData.text}
+        onChange={handleInputChange}
+        required
+      />
+
+      <button className={styles.button} type="submit">
+        Submit
+      </button>
     </form>
   );
 };
