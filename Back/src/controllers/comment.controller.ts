@@ -33,4 +33,19 @@ export class CommentController extends Controller<Comment> {
       return response.response({ error: "Internal Server Error" }).code(500);
     }
   }
+
+  async searchCommentByPost(request: Request, response: ResponseToolkit) {
+    try {
+      const { id } = request.params;
+
+      const postComments = await this.repo.search({
+        key: "post",
+        value: id,
+      });
+
+      return response.response(postComments).code(201);
+    } catch (error) {
+      return response.response({ error: "Internal Server Error" }).code(500);
+    }
+  }
 }

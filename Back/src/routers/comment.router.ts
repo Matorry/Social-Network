@@ -23,5 +23,17 @@ export class CommentRouter {
         ],
       },
     });
+
+    server.route({
+      method: "POST",
+      path: "/comment/search/{id}",
+      handler: this.controller.searchCommentByPost.bind(this.controller),
+      options: {
+        pre: [
+          { method: this.authInterceptor.authorization },
+          { method: this.authInterceptor.authentication },
+        ],
+      },
+    });
   }
 }
