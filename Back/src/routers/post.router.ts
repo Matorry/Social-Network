@@ -37,6 +37,18 @@ export class PostRouter {
     });
 
     server.route({
+      method: "GET",
+      path: "/post/getbyid/{id}",
+      handler: this.controller.get.bind(this.controller),
+      options: {
+        pre: [
+          { method: this.authInterceptor.authorization },
+          { method: this.authInterceptor.authentication },
+        ],
+      },
+    });
+
+    server.route({
       method: "DELETE",
       path: "/post/delete/{id}",
       handler: this.controller.delete.bind(this.controller),

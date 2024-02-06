@@ -5,12 +5,10 @@ const commentSchema = new Schema<Comment>({
   text: {
     type: String,
     required: true,
-    unique: true,
   },
   date: {
     type: Date,
     required: true,
-    unique: true,
   },
   author: {
     type: Schema.Types.ObjectId,

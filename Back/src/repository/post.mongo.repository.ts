@@ -26,14 +26,11 @@ export class PostMongoRepository implements Repository<Post> {
   async patch(id: string, newData: Partial<Post>): Promise<Post> {
     const data = await PostModel.findByIdAndUpdate(id, newData, {
       new: true,
-    })
-      .populate("author")
-      .exec();
+    }).exec();
     if (!data)
       throw new HttpError(404, "Not Found", "User not found in file system", {
         cause: "Trying update",
       });
-    console.log(data);
     return data;
   }
 
@@ -54,7 +51,6 @@ export class PostMongoRepository implements Repository<Post> {
   }): Promise<Post[]> {
     const data = await PostModel.find({ [key]: value })
       .populate("author")
-      .populate("likes")
       .exec();
     return data;
   }

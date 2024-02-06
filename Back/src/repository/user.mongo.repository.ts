@@ -29,14 +29,11 @@ export class UserMongoRepository implements Repository<User> {
   async patch(id: string, newData: Partial<User>): Promise<User> {
     const data = await UserModel.findByIdAndUpdate(id, newData, {
       new: true,
-    })
-
-      .exec();
+    }).exec();
     if (!data)
       throw new HttpError(404, "Not Found", "User not found in file system", {
         cause: "Trying update",
       });
-    console.log(data);
     return data;
   }
 

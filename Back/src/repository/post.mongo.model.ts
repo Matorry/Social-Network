@@ -19,13 +19,8 @@ const postSchema = new Schema<Post>({
     type: Date,
     required: true,
   },
-  likes: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-  ],
+
+  likes: [{ type: String, required: true }],
 });
 
 postSchema.set("toJSON", {

@@ -29,7 +29,6 @@ export class PostController extends Controller<Post> {
     try {
       const { id } = request.params;
       const author = await this.userRepo.get(id);
-      console.log(author);
       const posts = await this.postRepo.search({
         key: "author",
         value: author,

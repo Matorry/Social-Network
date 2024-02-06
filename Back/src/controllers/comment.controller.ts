@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { Request, ResponseToolkit } from "@hapi/hapi";
 import { Comment, CommentNoId } from "../entities/comment.js";
 import { CommentMongoRepository } from "../repository/comment.mongo.repository.js";
@@ -19,17 +18,26 @@ export class CommentController extends Controller<Comment> {
     try {
       const newComment = request.payload as CommentNoId;
       const author = await this.userRepo.get(newComment.author.id);
+      if (!author) {
+        return response.response({ error: "Author not found" }).code(400);
+      }
+
       newComment.author = author;
 
       newComment.date = new Date();
 
       const post = await this.postRepo.get(newComment.post.id);
+      if (!post) {
+        return response.response({ error: "Post not found" }).code(400);
+      }
+
       newComment.post = post;
 
-      const comment = await this.repo.post(request.payload as CommentNoId);
+      const comment = await this.repo.post(newComment);
 
       return response.response(comment).code(201);
     } catch (error) {
+      console.error("Error creating comment:", error);
       return response.response({ error: "Internal Server Error" }).code(500);
     }
   }
@@ -43,8 +51,9 @@ export class CommentController extends Controller<Comment> {
         value: id,
       });
 
-      return response.response(postComments).code(201);
+      return response.response(postComments).code(200);
     } catch (error) {
+      console.error("Error searching comments by post:", error);
       return response.response({ error: "Internal Server Error" }).code(500);
     }
   }
