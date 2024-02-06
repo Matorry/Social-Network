@@ -4,7 +4,7 @@ import { useUsers } from '../../hooks/use.user';
 import { LoginData } from '../../models/user';
 import styles from './loginForm.module.scss';
 
-const LoginForm = () => {
+const LoginForm: React.FC = () => {
   const { loginUser, status, error, isLoading } = useUsers();
   const [userName, setUserName] = useState('');
   const [passwd, setPasswd] = useState('');

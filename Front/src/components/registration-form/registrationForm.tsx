@@ -9,7 +9,8 @@ type Props = {
   currentUser?: User;
 };
 
-const RegistrationForm = ({ mode, currentUser }: Props) => {
+const RegistrationForm: React.FC<Props> = (props) => {
+  const { mode, currentUser } = props;
   const { registerUser, updateUser, deleteUser, error } = useUsers();
   const navigate = useNavigate();
 
