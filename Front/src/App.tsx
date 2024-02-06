@@ -6,6 +6,7 @@ function App() {
     <>
       <Header></Header>
       <AppRoutes></AppRoutes>
+      <footer></footer>
     </>
   );
 }

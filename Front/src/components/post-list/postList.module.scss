@@ -2,20 +2,17 @@
 
 div {
   padding: 20px;
-}
-
-h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-p {
-  font-size: 16px;
-  color: #555;
-  margin-top: 10px;
+  h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  .postList {
+    list-style: none;
+    padding: 0;
+  }
+  p {
+    font-size: 16px;
+    color: #555;
+    margin-top: 10px;
+  }
 }

@@ -27,7 +27,7 @@ const PostList: React.FC = () => {
         <ul className={styles.postList}>
           {currentUserPosts.map((post) => (
             <div key={post.id}>
-              <PostItem post={post} />
+              <PostItem post={post} isHome={false} />
               <Link to={`/edit-post/${post.id}`} className={styles.button}>
                 Edit
               </Link>

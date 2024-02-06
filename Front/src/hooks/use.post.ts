@@ -6,6 +6,7 @@ import { AppDispatch, RootState } from '../store/store';
 import {
   createThunk,
   deleteThunk,
+  getByAuthorThunk,
   getUserPostsThunk,
   updateThunk,
 } from '../thunks/post.thunk';
@@ -39,11 +40,20 @@ export function usePosts() {
     postsDispatch(updateThunk({ repository, data, id, token }));
   };
 
+  const loadUserFollowingPosts = useCallback(
+    async (id: string) => {
+      postsDispatch(getByAuthorThunk({ repository, id, token }));
+    },
+    [repository, postsDispatch, token]
+  );
+
   return {
+    loadUserFollowingPosts,
     createPost,
     updatePost,
     deletePost,
     loadUserPosts,
     currentUserPosts: postState.currentUserPosts,
+    currentUserFollowingPosts: postState.followingPosts,
   };
 }

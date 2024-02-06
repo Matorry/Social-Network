@@ -3,6 +3,7 @@ import { Post } from '../models/post';
 import {
   createThunk,
   deleteThunk,
+  getByAuthorThunk,
   getUserPostsThunk,
   updateThunk,
 } from '../thunks/post.thunk';
@@ -99,6 +100,25 @@ const postSlice = createSlice({
     );
 
     builder.addCase(updateThunk.rejected, (state, action) => {
+      state.loadState = 'error';
+      state.error = action.error.message;
+    });
+
+    builder.addCase(getByAuthorThunk.pending, (state) => {
+      state.error = undefined;
+      state.loadState = 'loading';
+    });
+
+    builder.addCase(
+      getByAuthorThunk.fulfilled,
+      (state, { payload }: { payload: Post[] }) => {
+        state.error = undefined;
+        state.followingPosts = payload;
+        state.loadState = 'loaded';
+      }
+    );
+
+    builder.addCase(getByAuthorThunk.rejected, (state, action) => {
       state.loadState = 'error';
       state.error = action.error.message;
     });

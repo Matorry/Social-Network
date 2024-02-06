@@ -76,4 +76,19 @@ export class ApiPostRepository implements Repository<Post> {
     const data = await response.json();
     return data;
   }
+
+  async getByAuthor(id: string, token: string): Promise<Post[]> {
+    const response = await fetch(`${this.urlBase}/post/search-post/${id}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok)
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+
+    const data = await response.json();
+    return data;
+  }
 }

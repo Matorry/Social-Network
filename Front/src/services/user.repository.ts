@@ -92,7 +92,6 @@ export class ApiUsersRepository implements Repository<User> {
   }
 
   async follow(user: User, id: string, token: string): Promise<User> {
-    console.log(id);
     const response = await fetch(`${this.urlBase}/user/follow/${id}`, {
       method: 'PATCH',
       body: JSON.stringify(user.id),

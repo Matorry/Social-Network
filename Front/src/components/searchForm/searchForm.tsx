@@ -18,35 +18,26 @@ const SearchForm: React.FC = () => {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Search person:</label>
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={handleInputChange}
-            className={styles.input}
-          />
-          <button type="submit" className={styles.button}>
-            Search
-          </button>
-        </div>
-        {isLoading && <p>Loading...</p>}
-        {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-        {search && (
-          <span>
-            User found:
-            <Link
-              onClick={() => getUserById(search?.id)}
-              to={`/user/:${search?.id}`}
-            >
-              {search?.userName}
-            </Link>
-          </span>
-        )}
-      </form>
-    </>
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <div>
+        <label>Search person:</label>
+        <input type="text" value={searchTerm} onChange={handleInputChange} />
+        <button type="submit">Search</button>
+      </div>
+      {isLoading && <p>Loading...</p>}
+      {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+      {search && (
+        <span>
+          User found:
+          <Link
+            onClick={() => getUserById(search?.id)}
+            to={`/user/:${search?.id}`}
+          >
+            {search?.userName}
+          </Link>
+        </span>
+      )}
+    </form>
   );
 };
 

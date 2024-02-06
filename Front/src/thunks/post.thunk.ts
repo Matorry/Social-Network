@@ -42,3 +42,16 @@ export const updateThunk = createAsyncThunk<
 
   return newPost;
 });
+
+export const getByAuthorThunk = createAsyncThunk<
+  Post[],
+  {
+    repository: ApiPostRepository;
+    id: string;
+    token: string;
+  }
+>('post/search-post', async ({ repository, id, token }) => {
+  const posts = await repository.getByAuthor(id, token);
+
+  return posts;
+});

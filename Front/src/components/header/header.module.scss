@@ -2,14 +2,13 @@ $primary: white;
 $secondary: #667eea;
 
 .header {
-  position: sticky;
-  top: 0;
   display: flex;
   transition: all 0.5s ease;
   z-index: 1;
   background-color: $secondary;
   padding-inline: 2rem;
   justify-content: space-between;
+  height: 7vh;
 
   nav {
     display: flex;
