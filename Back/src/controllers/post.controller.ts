@@ -44,10 +44,8 @@ export class PostController extends Controller<Post> {
     try {
       const { id } = request.params;
 
-      // Obtener el usuario actual
       const currentUser = await this.userRepo.get(id);
 
-      // Obtener a los usuarios que sigue
       const usersFollowing = await Promise.all(
         currentUser.followings.map(async (user) => {
           const data = await this.userRepo.get(user.id);
@@ -55,7 +53,6 @@ export class PostController extends Controller<Post> {
         }),
       );
 
-      // Obtener los posts de los usuarios seguidos
       const usersFollowingPosts = await Promise.all(
         usersFollowing.map(async (user) => {
           const posts = await this.repo.search({
@@ -66,7 +63,6 @@ export class PostController extends Controller<Post> {
         }),
       );
 
-      // Concatenar los posts de todos los usuarios seguidos
       const allFollowingPosts = usersFollowingPosts.flat();
 
       if (allFollowingPosts.length > 0) {
