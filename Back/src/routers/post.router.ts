@@ -59,5 +59,17 @@ export class PostRouter {
         ],
       },
     });
+
+    server.route({
+      method: "GET",
+      path: "/post/search-post/{id}",
+      handler: this.controller.getByUserAuthorFollowing.bind(this.controller),
+      options: {
+        pre: [
+          { method: this.authInterceptor.authorization },
+          { method: this.authInterceptor.authentication },
+        ],
+      },
+    });
   }
 }

@@ -39,4 +39,44 @@ export class PostController extends Controller<Post> {
       return response.response({ error: "Internal Server Error" }).code(500);
     }
   }
+
+  async getByUserAuthorFollowing(request: Request, response: ResponseToolkit) {
+    try {
+      const { id } = request.params;
+
+      // Obtener el usuario actual
+      const currentUser = await this.userRepo.get(id);
+
+      // Obtener a los usuarios que sigue
+      const usersFollowing = await Promise.all(
+        currentUser.followings.map(async (user) => {
+          const data = await this.userRepo.get(user.id);
+          return data;
+        }),
+      );
+
+      // Obtener los posts de los usuarios seguidos
+      const usersFollowingPosts = await Promise.all(
+        usersFollowing.map(async (user) => {
+          const posts = await this.repo.search({
+            key: "author",
+            value: user.id,
+          });
+          return posts;
+        }),
+      );
+
+      // Concatenar los posts de todos los usuarios seguidos
+      const allFollowingPosts = usersFollowingPosts.flat();
+
+      if (allFollowingPosts.length > 0) {
+        return response.response(allFollowingPosts).code(200);
+      }
+
+      return response.response({ error: "No posts found" }).code(404);
+    } catch (error) {
+      console.error(error);
+      return response.response({ error: "Internal Server Error" }).code(500);
+    }
+  }
 }
