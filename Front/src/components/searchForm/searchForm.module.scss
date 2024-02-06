@@ -28,7 +28,7 @@
 
 @media (width < 700px) {
   .form {
-    width: 350px;
+    max-width: 320px;
     gap: none;
     div {
       label {

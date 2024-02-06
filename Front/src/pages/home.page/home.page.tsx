@@ -16,24 +16,22 @@ function HomePage() {
   }, [loadUserFollowingPosts, id]);
 
   return (
-    <main>
+    <div className={styles.postListContainer}>
       <SearchForm></SearchForm>
-      <div className={styles.postListContainer}>
-        <h2 className={styles.postListTitle}>My posts:</h2>
+      <h2 className={styles.postListTitle}>My posts:</h2>
 
-        {currentUserFollowingPosts.length > 0 ? (
-          <ul className={styles.postList}>
-            {currentUserFollowingPosts.map((post) => (
-              <div key={post.id}>
-                <PostItem post={post} isHome={true} />
-              </div>
-            ))}
-          </ul>
-        ) : (
-          <p className={styles.noPostsMessage}>No posts available.</p>
-        )}
-      </div>
-    </main>
+      {currentUserFollowingPosts.length > 0 ? (
+        <ul className={styles.postList}>
+          {currentUserFollowingPosts.map((post) => (
+            <li key={post.id}>
+              <PostItem post={post} isHome={true} />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className={styles.noPostsMessage}>No posts available.</p>
+      )}
+    </div>
   );
 }
 export default HomePage;

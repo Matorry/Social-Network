@@ -5,7 +5,9 @@ function App() {
   return (
     <>
       <Header></Header>
-      <AppRoutes></AppRoutes>
+      <main>
+        <AppRoutes></AppRoutes>
+      </main>
       <footer></footer>
     </>
   );

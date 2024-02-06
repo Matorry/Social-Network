@@ -12,4 +12,9 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding: 0px;
+  main {
+    padding-top: 10rem;
+    width: 100%;
+  }
 }

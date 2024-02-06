@@ -62,7 +62,7 @@ $secondary: #667eea;
           transition: all 0.4s ease-in-out;
         }
 
-        @media (width < 700px) {
+        @media (width < 842px) {
           background-color: transparent;
           padding: 0 1em;
           justify-content: flex-start;
@@ -80,7 +80,7 @@ $secondary: #667eea;
     }
   }
 
-  @media (width < 700px) {
+  @media (width < 842px) {
     .hidden {
       display: none;
     }
