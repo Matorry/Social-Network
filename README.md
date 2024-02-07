@@ -26,9 +26,10 @@ Variables de Entorno
 En el directorio del servidor (backend), crea un archivo llamado .env y define las siguientes variables de entorno:
 
 DB_SUBDOMAIN=tu_subdominio_del_cluster_de_MongoDB, 
+
 DB_USER=tu_usuario_de_MongoDB, 
+
 DB_PASSWD=tu_contraseña_de_MongoDB, 
-Asegúrate de reemplazar tu_usuario_de_MongoDB y tu_contraseña_de_MongoDB con las credenciales reales de tu base de datos MongoDB.
 
 #### Funcionalidades Implementadas
 
