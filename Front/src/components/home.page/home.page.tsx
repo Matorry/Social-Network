@@ -11,7 +11,6 @@ const HomePage: React.FC = () => {
   const { currentUser } = useUsers();
   const { loadUserFollowingPosts, currentUserFollowingPosts, updatePost } =
     usePosts();
-
   const id = currentUser.id;
 
   useEffect(() => {
