@@ -139,4 +139,25 @@ export class ApiUsersRepository implements Repository<User> {
     const data = await response.json();
     return data;
   }
+
+  async uploadImg(
+    formData: FormData,
+    token: string,
+    id: string
+  ): Promise<User> {
+    const response = await fetch(`${this.urlBase}/upload-image/${id}`, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        // 'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok)
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+
+    const data = await response.json();
+    return data;
+  }
 }
