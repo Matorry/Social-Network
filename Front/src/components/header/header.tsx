@@ -37,6 +37,11 @@ const Header: React.FC = () => {
                     My account
                   </Link>
                 </li>
+                <li>
+                  <Link to={`chat`} onClick={() => setIsMenuOpen(false)}>
+                    Chat room
+                  </Link>
+                </li>
                 <li onClick={logout} className={style.login}>
                   <a href="/">Logout</a>
                   <FaUser />

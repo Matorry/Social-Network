@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUsers } from '../../hooks/use.user';
 import { User, UserNoId } from '../../models/user';
-import ImageUpload from '../image.form/image.upload.form';
 import styles from './registrationForm.module.scss';
 
 type Props = {
@@ -157,7 +156,6 @@ const RegistrationForm: React.FC<Props> = (props) => {
           </button>
         )}
       </form>
-      {mode === 'update' && <ImageUpload></ImageUpload>}
     </main>
   );
 };

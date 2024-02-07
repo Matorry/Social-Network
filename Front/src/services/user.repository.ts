@@ -145,11 +145,11 @@ export class ApiUsersRepository implements Repository<User> {
     token: string,
     id: string
   ): Promise<User> {
+    console.log(formData);
     const response = await fetch(`${this.urlBase}/upload-image/${id}`, {
       method: 'POST',
       body: formData,
       headers: {
-        // 'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${token}`,
       },
     });
