@@ -13,6 +13,7 @@ import {
   registerThunk,
   unfollowThunk,
   updateThunk,
+  uploadImageThunk,
 } from '../thunks/user.thunk';
 
 export const urlBaseUsers = 'http://localhost:3000';
@@ -78,6 +79,10 @@ export function useUsers() {
     usersDispatch(actions.setUserSearch());
   };
 
+  const uploadImage = async (formData: FormData, id: string) => {
+    usersDispatch(uploadImageThunk({ repository, formData, token, id }));
+  };
+
   return {
     currentUser: usersState.currentUser.user,
     error: usersState.error,
@@ -89,6 +94,7 @@ export function useUsers() {
     loginUser,
     registerUser,
     updateUser,
+    uploadImage,
     deleteUser,
     logout,
     searchUserByName,

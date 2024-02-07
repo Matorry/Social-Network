@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { usePosts } from '../../hooks/use.post';
 import { useUsers } from '../../hooks/use.user';
 import { PostNoId } from '../../models/post';
@@ -10,6 +10,7 @@ const PostForm: React.FC = () => {
   const { currentUser } = useUsers();
   const { createPost, updatePost, currentUserPosts } = usePosts();
   const { id } = useParams<{ id?: string }>();
+  const navigate = useNavigate();
 
   const [postFormData, setPostFormData] = useState<PostNoId>({
     id: '',
@@ -64,6 +65,8 @@ const PostForm: React.FC = () => {
       date: new Date(),
       likes: [],
     });
+
+    navigate('/my-posts');
   };
 
   return (
