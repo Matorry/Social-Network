@@ -64,7 +64,7 @@ export const unfollowThunk = createAsyncThunk<
 });
 
 export const deleteThunk = createAsyncThunk<
-  void,
+  string,
   { repository: ApiUsersRepository; id: string; token: string }
 >('users/delete', async ({ repository, id, token }) => {
   const deleteUser = await repository.delete(id, token);
@@ -88,4 +88,18 @@ export const getUserByUsernameThunk = createAsyncThunk<
   const User = await repository.getByUsername(userName, token);
 
   return User;
+});
+
+export const uploadImageThunk = createAsyncThunk<
+  User,
+  {
+    repository: ApiUsersRepository;
+    formData: FormData;
+    token: string;
+    id: string;
+  }
+>('users/upload-img', async ({ repository, formData, token, id }) => {
+  const updatedUser = await repository.uploadImg(formData, token, id);
+
+  return updatedUser;
 });

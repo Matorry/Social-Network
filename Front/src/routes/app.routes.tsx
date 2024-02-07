@@ -1,5 +1,6 @@
 import { Suspense, lazy } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import Chat from '../components/chat/chat';
 import { useUsers } from '../hooks/use.user';
 
 const LoginForm = lazy(() => import('../components/login-form/loginForm'));
@@ -56,6 +57,7 @@ export function AppRoutes() {
             status === 'not logged' ? <Navigate to="/login" /> : <HomePage />
           }
         />
+        <Route path="/chat" element={<Chat />} />
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </Suspense>

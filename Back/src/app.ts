@@ -1,4 +1,5 @@
 import Hapi from "@hapi/hapi";
+import { Server } from "socket.io";
 import { CommentController } from "./controllers/comment.controller.js";
 import { PostController } from "./controllers/post.controller.js";
 import { UsersController } from "./controllers/user.controller.js";
@@ -18,10 +19,7 @@ const server = new Hapi.Server({
   port: 3000,
   host: "localhost",
   routes: {
-    cors: {
-      origin: ["*"],
-      credentials: true,
-    },
+    cors: {},
   },
 });
 
@@ -46,6 +44,22 @@ const init = async () => {
 
   await server.start();
   console.log(`Server running on: ${server.info.uri}`);
+
+  const io = new Server(server.listener, {
+    cors: {},
+  });
+
+  io.on("connection", (socket) => {
+    console.log("A user connected");
+
+    socket.on("chat:message", ({ userName, message }) => {
+      io.emit("chat:message", { user: userName, text: message });
+    });
+
+    socket.on("disconnect", () => {
+      console.log("User disconnected");
+    });
+  });
 };
 
 process.on("unhandledRejection", (err) => {
